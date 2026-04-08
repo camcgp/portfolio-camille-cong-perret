@@ -319,7 +319,7 @@ h1.hero-title {
 
 .section-label {
   font-family: var(--font-display);
-  font-size: clamp(22px, 2.5vw, 34px);
+  font-size: clamp(28px, 3.2vw, 44px);
   font-weight: 700;
   color: var(--chalk);
   margin-bottom: 20px;
@@ -327,15 +327,17 @@ h1.hero-title {
 .about-bio {
   font-size: 15px; line-height: 1.8;
   color: var(--chalk-muted); margin-bottom: 28px;
+  max-width: 260px;
 }
 .about-bio strong { color: var(--chalk); font-weight: 500; }
 .about-photo {
-  width: 200px; aspect-ratio: 3/4;
+  width: 200px; aspect-ratio: 1/1;
   background: transparent;
   border-radius: 8px;
   transform: rotate(-1.5deg);
   position: relative; overflow: hidden;
   margin-bottom: 18px;
+  border: 1.5px dashed #d4ad30;
 }
 .about-photo img {
   width: 100%; height: 100%;
@@ -359,7 +361,9 @@ h1.hero-title {
 /* CHECKLIST */
 .checklist-title {
   font-family: var(--font-display); font-weight: 700;
-  font-size: clamp(22px, 2.5vw, 34px); color: var(--chalk); margin-bottom: 18px;
+  font-size: clamp(28px, 3.2vw, 44px); color: var(--chalk);
+  margin-bottom: 18px; margin-top: 18px;
+  text-align: left;
 }
 .checklist { list-style: none; margin-bottom: 24px; }
 .checklist-item {
@@ -915,7 +919,11 @@ h1.hero-title {
         <div id="il-hint" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .4s;">
           <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/point-interrogation.png" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">
         </div>
-        <img id="illus-img" src="" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s ease;">
+        <img id="il0" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-1.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s ease;">
+        <img id="il1" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-2.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s ease;">
+        <img id="il2" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-3.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s ease;">
+        <img id="il3" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-4.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s ease;">
+        <img id="il4" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-5.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s ease;">
       </div>
       <h3 class="checklist-title">What I bring</h3>
       <ul class="checklist" id="checklist">
@@ -1322,28 +1330,17 @@ function checkChalkLines() {}
 
 // CHECKLIST
 const ilHint = document.getElementById('il-hint');
-const ilImg = document.getElementById('illus-img');
-const imgSrcs = [
-  'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-1.png',
-  'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-2.png',
-  'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-3.png',
-  'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-4.png',
-  'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-5.png',
-];
+const ilImgs = [0,1,2,3,4].map(i => document.getElementById('il'+i));
 
 function updateIllus() {
   const checked = [...document.querySelectorAll('.checklist-item.checked')];
-  if(checked.length === 0) {
-    if(ilImg) ilImg.style.opacity='0';
-    if(ilHint) ilHint.style.opacity='1';
-  } else {
-    const lastIdx = parseInt(checked[checked.length-1].dataset.index);
-    if(ilHint) ilHint.style.opacity='0';
-    if(ilImg) {
-      ilImg.style.opacity='0';
-      setTimeout(()=>{ ilImg.src=imgSrcs[lastIdx]; ilImg.style.opacity='1'; },200);
-    }
-  }
+  const checkedIdxs = checked.map(el => parseInt(el.dataset.index));
+  // Show hint only if nothing checked
+  if(ilHint) ilHint.style.opacity = checkedIdxs.length === 0 ? '1' : '0';
+  // Each image visible only if its checkbox is checked
+  ilImgs.forEach((img, i) => {
+    if(img) img.style.opacity = checkedIdxs.includes(i) ? '1' : '0';
+  });
 }
 
 let checkedCount = 0;
