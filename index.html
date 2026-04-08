@@ -246,14 +246,17 @@ h1.hero-title {
 .hero-name {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(40px, 6vw, 88px);
+  font-size: clamp(32px, 5vw, 72px);
   color: var(--chalk);
   margin-bottom: 36px;
-  line-height: 1.2;
+  line-height: 1.15;
   padding-bottom: 28px;
   overflow: visible;
   filter: url(#chalk);
+  white-space: normal;
 }
+.hero-name .hero-line { white-space: normal; }
+.hero-name .hero-line-inner { white-space: normal; display: block; }
 .hero-role {
   font-family: var(--font-body);
   font-size: clamp(10px, 1vw, 13px);
