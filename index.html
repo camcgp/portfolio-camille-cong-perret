@@ -436,7 +436,7 @@ h1.hero-title {
 .wave-phrase {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(38px, 6vw, 96px);
+  font-size: clamp(28px, 4vw, 62px);
   color: var(--chalk);
   filter: url(#chalk);
   display: flex;
@@ -454,9 +454,9 @@ h1.hero-title {
   display: inline-block;
   position: relative;
   vertical-align: middle;
-  width: 220px;
-  height: 80px;
-  margin-left: 20px;
+  width: 140px;
+  height: 55px;
+  margin-left: 12px;
   transform: none;
 }
 .draw-path {
@@ -470,9 +470,14 @@ h1.hero-title {
   transition: stroke-dashoffset 1.6s ease-out;
 }
 .draw-path.active { stroke-dashoffset: 0; }
+.draw-path-arrowhead {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  transition: stroke-dashoffset 0.4s ease-out 1.6s;
+}
 
 /* ---- WORKS ---- */
-#panel-works { width: 155vw; position: relative; }
+#panel-works { width: 120vw; position: relative; }
 .works-title {
   position: absolute; top: 56px; left: 72px;
   font-family: var(--font-display); font-weight: 700;
@@ -492,10 +497,11 @@ h1.hero-title {
   cursor: none;
   will-change: transform;
   transition: border-color .3s;
-  opacity: 0;
+  opacity: 1;
   transform-origin: center center;
 }
 .work-card.show { opacity: 1; }
+.work-card { opacity: 1; }
 .work-card:hover { border-color: rgba(240,234,224,0.58); z-index: 10 !important; }
 
 .card-pin {
@@ -655,8 +661,7 @@ h1.hero-title {
 
 /* PANEL REVEAL */
 .panel-reveal {
-  opacity: 0; transform: translateX(28px);
-  transition: opacity .7s ease, transform .7s ease;
+  opacity: 1; transform: translateX(0);
 }
 .panel-reveal.show { opacity: 1; transform: translateX(0); }
 
@@ -766,8 +771,8 @@ h1.hero-title {
           C 226,179 218,162 240,115
           C 262,68 320,20 420,30
           C 520,40 580,120 575,172
-          M 558,160 L 575,172 L 585,158
         "/>
+        <path class="draw-path draw-path-arrowhead" d="M 558,160 L 575,172 L 585,158"/>
       </svg>
       <div class="wave-phrase" id="wave-phrase"></div><svg id="arrow-end" class="chalk-arrow-element" viewBox="0 0 520 160" preserveAspectRatio="xMidYMid meet">
         <path class="draw-path" d="
@@ -780,8 +785,8 @@ h1.hero-title {
           C 190,86 222,90 252,84
           C 278,78 300,64 324,46
           C 348,28 372,12 398,4
-          M 384,0 L 398,4 L 390,18
         "/>
+        <path class="draw-path draw-path-arrowhead" d="M 384,0 L 398,4 L 390,18"/>
       </svg>
     </div>
   </div>
