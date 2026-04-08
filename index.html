@@ -418,25 +418,25 @@ h1.hero-title {
 
 /* ---- WAVE SECTION ---- */
 #panel-wave {
-  width: 105vw;
+  width: 100vw;
   background: var(--bg);
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
 }
 .marquee-container {
-  position: absolute;
+  position: relative;
   white-space: nowrap;
   display: flex;
   align-items: center;
-  will-change: transform;
+  justify-content: center;
 }
 .wave-phrase {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(40px, 8vw, 110px);
+  font-size: clamp(28px, 4.5vw, 72px);
   color: var(--chalk);
   filter: url(#chalk);
   display: flex;
@@ -1013,9 +1013,8 @@ function getPanelX(id){ const el=document.getElementById(id); return el?el.offse
 const panelIds = ['panel-hero','panel-wave','panel-works','panel-about','panel-contact'];
 const marqueeEl = document.getElementById('marquee-horiz');
 let chalkLinesDrawn = false;
-let waveActive = false;
-let waveSettled = false;
-let waveStart = 0;
+// wave trigger flag — declared in updateWaveEffect block below
+let waveTriggered = false;
 
 (function animScroll(){
   currentX+=(targetX-currentX)*0.09;
@@ -1262,7 +1261,8 @@ if(waveTarget) {
   ).join('');
 }
 
-// WAVE effect - direct scroll-relative marquee
+// WAVE effect — text is fixed on its 100vw panel.
+// Letters tumble as the panel scrolls into view, then settle.
 function updateWaveEffect() {
   const panel = document.getElementById('panel-wave');
   const holder = document.getElementById('marquee-holder');
@@ -1272,24 +1272,21 @@ function updateWaveEffect() {
   const panelX = panel.offsetLeft;
   const screenW = window.innerWidth;
 
-  // How far we've scrolled into the wave panel
-  const scrolledIn = currentX - panelX;
+  // Progress: 0 when panel right edge is at screen right, 1 when panel is centered
+  const progress = Math.max(0, Math.min(1, (currentX - (panelX - screenW)) / screenW));
 
-  // Text starts closer (60% off-screen right) and moves slower
-  const textX = screenW * 0.05 - scrolledIn * 2.5;
-  holder.style.transform = `translateX(${textX}px)`;
-
-  // Individual letter tumble
-  const progress = Math.max(0, Math.min(1, scrolledIn / (screenW * 0.3)));
+  // Letters tumble in from a wave and settle into position
   const chars = document.querySelectorAll('.wave-char');
   chars.forEach((ch, i) => {
-    const offset = Math.sin(progress * 12 + i * 0.25) * 14;
-    const rotate = Math.cos(progress * 6 + i * 0.12) * 8;
-    ch.style.transform = `translateY(${offset}px) rotate(${rotate}deg)`;
+    const settle = Math.min(1, progress * 2); // settles faster
+    const wave = Math.sin(progress * 10 + i * 0.35) * 28 * (1 - settle);
+    const rot  = Math.cos(progress *  6 + i * 0.2 ) * 18 * (1 - settle);
+    ch.style.transform = `translateY(${wave}px) rotate(${rot}deg)`;
   });
 
-  // Trigger arrows immediately as text enters
-  if(scrolledIn > screenW * 0.05) {
+  // Draw arrows once panel is mostly in view
+  if(progress > 0.4 && !waveTriggered) {
+    waveTriggered = true;
     paths.forEach(p => p.classList.add('active'));
   }
 }
