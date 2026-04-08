@@ -415,20 +415,13 @@ h1.hero-title {
   margin-bottom: 18px; margin-top: 18px;
   text-align: left;
 }
-.checklist { list-style: none; margin-bottom: 24px; }
+.checklist { list-style: none; margin-bottom: 24px; width: fit-content; }
 .checklist-item {
   display: flex; align-items: center; gap: 14px;
   padding: 11px 0;
   position: relative;
   cursor: none;
-}
-.checklist-item::after {
-  content: "";
-  position: absolute;
-  bottom: 0; left: 0;
-  width: 100%;
-  height: 1px;
-  background: rgba(240,234,224,0.07);
+  border-bottom: 1px solid rgba(240,234,224,0.07);
 }
 .checkbox-wrap { width: 20px; height: 20px; flex-shrink: 0; }
 .checkbox-wrap svg { width: 20px; height: 20px; overflow: visible; }
@@ -739,6 +732,99 @@ h1.hero-title {
   .marquee-horiz { font-size: 28px; }
   #panel-marquee { width: 100vw; min-width: unset; height: 120px; }
 }
+
+/* CHALK PAGE TRANSITION */
+#chalk-overlay {
+  position: fixed; inset: 0; z-index: 9500;
+  pointer-events: none;
+  opacity: 0;
+  background: var(--bg);
+}
+#chalk-overlay.entering {
+  pointer-events: all;
+  animation: chalk-wipe-in 0.7s cubic-bezier(0.7,0,0.3,1) forwards;
+}
+#chalk-overlay.leaving {
+  animation: chalk-wipe-out 0.5s ease forwards;
+}
+@keyframes chalk-wipe-in {
+  0%   { clip-path: circle(0% at 50% 50%); opacity:1; }
+  100% { clip-path: circle(150% at 50% 50%); opacity:1; }
+}
+@keyframes chalk-wipe-out {
+  0%   { opacity:1; }
+  100% { opacity:0; }
+}
+/* Chalk texture overlay on transition */
+#chalk-overlay::after {
+  content:'';
+  position:absolute; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='chalk'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23chalk)' opacity='1'/%3E%3C/svg%3E");
+  opacity:0.18;
+  mix-blend-mode: overlay;
+  pointer-events:none;
+}
+
+/* PROJECT DETAIL */
+#project-detail {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  z-index: 9000;
+  overflow-y: auto;
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  padding: 80px 80px;
+  display: none;
+}
+#project-detail.show { display: block; }
+#project-detail.visible { opacity: 1; transform: translateY(0); }
+.detail-back {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-body); font-size: 13px;
+  color: var(--chalk-muted); cursor: none;
+  margin-bottom: 60px; letter-spacing: 0.08em; text-transform: uppercase;
+  transition: color 0.2s; background: none; border: none;
+}
+.detail-back:hover { color: var(--chalk); }
+.detail-title {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(40px,6vw,88px);
+  color: var(--chalk); margin-bottom: 10px; line-height: 0.95;
+  filter: url(#chalk);
+}
+.detail-type {
+  font-size: 13px; color: var(--chalk-muted);
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 48px;
+}
+.detail-video {
+  width: 100%; aspect-ratio: 16/9;
+  background: #1a1a1a; border-radius: 8px;
+  margin-bottom: 60px; overflow: hidden;
+}
+.detail-video video { width:100%; height:100%; object-fit:cover; display:block; }
+.detail-section { margin-bottom: 44px; max-width: 720px; }
+.detail-section-title {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 22px; color: var(--chalk); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 12px;
+}
+.detail-section-title::before {
+  content:''; display:block; width:28px; height:1.5px; background: var(--accent); flex-shrink:0;
+}
+.detail-text { color: var(--chalk-muted); line-height: 1.85; font-size: 15px; }
+.detail-nav {
+  display: flex; justify-content: space-between;
+  margin-top: 80px; padding-top: 28px;
+  border-top: 1px solid rgba(240,234,224,0.08);
+}
+.detail-nav-btn {
+  font-family: var(--font-body); font-size: 13px;
+  color: var(--chalk-muted); cursor: none;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  transition: color 0.2s; background: none; border: none;
+}
+.detail-nav-btn:hover { color: var(--chalk); }
+
 </style>
 </head>
 <body>
@@ -825,14 +911,14 @@ h1.hero-title {
       
       
       </div>
-      <div class="hero-img-item" style="width:230px;height:230px;top:48vh;left:2%;transform:rotate(5deg);">
+      <div class="hero-img-item" style="width:230px;height:230px;top:48vh;left:28%;transform:rotate(5deg);">
         <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-bouquet.png" alt="bouquet">
         <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/bouquet.png" alt="bouquet">
 <div class="hero-annotation" style="bottom:-108px;left:10px;display:flex;flex-direction:column;align-items:flex-start;"><svg width="100" height="100" viewBox="0 0 100 100" fill="none"><defs><marker id="m4f6753" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9" fill="none" stroke="#4f6753" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><path d="M 10,95 C 15,55 50,25 90,5" stroke="#4f6753" stroke-width="2" stroke-linecap="round" marker-end="url(#m4f6753)"/></svg><div class="hero-annotation-text" style="color:#4f6753;margin-top:6px;text-align:left;">my favorite flowers</div></div>
       
       
       </div>
-      <div class="hero-img-item" style="width:230px;height:230px;top:48vh;left:48%;transform:rotate(-4deg);">
+      <div class="hero-img-item" style="width:230px;height:230px;top:48vh;left:62%;transform:rotate(-4deg);">
         <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-ordinateur.png" alt="ordinateur">
         <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/ordinateur.png" alt="ordinateur">
 <div class="hero-annotation" style="bottom:-108px;right:10px;display:flex;flex-direction:column;align-items:flex-end;"><svg width="100" height="100" viewBox="0 0 100 100" fill="none"><defs><marker id="m345683" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9" fill="none" stroke="#345683" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><path d="M 90,95 C 85,55 50,25 10,5" stroke="#345683" stroke-width="2" stroke-linecap="round" marker-end="url(#m345683)"/></svg><div class="hero-annotation-text" style="color:#345683;margin-top:6px;text-align:right;">where my creativity unfolds</div></div>
@@ -1046,12 +1132,7 @@ h1.hero-title {
 
 <script>
 // PROJECT DATA
-const projects = [
-  { title:'Alinea', type:'Website Design - Copywriting Agency', challenge:'Design a compelling website for Alinea, a copywriting agency that needed a digital presence reflecting their craft and voice.', approach:'I focused on typography-driven layouts that let the words breathe. Information architecture built around services and portfolio, with clear user flows from landing to contact.', outcome:'A clean, editorial website that positions Alinea as a credible, creative agency. Designed in Figma with full desktop and mobile layouts.' },
-  { title:'United Healthcare', type:'UX Design - CLIOS Submission - Eligibility Tool', challenge:'Redesign an eligibility verification tool to reduce friction for healthcare professionals navigating complex insurance data.', approach:'User research revealed key pain points around information density and error handling. I simplified the flow into clear steps and restructured the data hierarchy.', outcome:'A streamlined tool submitted as a CLIOS entry, demonstrating improved UX patterns and reduction in task completion friction.' },
-  { title:'Innocent', type:'Interaction Design - Vending Machine Screen', challenge:'Design the interactive screen for an Innocent brand vending machine - playful, on-brand, and easy to use in a 5-second interaction window.', approach:'I designed around the constraint of extremely short interaction time. Large touch targets, bold visuals, and immediate feedback animations kept the experience fun and friction-free.', outcome:'A fully prototyped screen flow in Figma matching Innocent\'s playful brand identity while optimizing for speed and clarity.' },
-  { title:'La Pivoine', type:'Mobile UX - Loyalty Card - Wallet App', challenge:'Create a loyalty card experience for La Pivoine that lives inside a native wallet app - simple, beautiful, and adds genuine value to returning customers.', approach:'I explored how to surface the right information at the right moment: points balance, reward progress, next benefit. Designed for one-glance readability and minimal interaction.', outcome:'A wallet-native loyalty card design that integrates seamlessly with Apple Wallet and Google Pay patterns while maintaining La Pivoine\'s brand warmth.' }
-];
+// projects defined below
 
 // CURSOR
 const dot = document.getElementById('cursor-dot');
@@ -1495,6 +1576,120 @@ document.querySelectorAll('.checklist-item').forEach(item => {
 });
 document.getElementById('cta-connect')?.addEventListener('click',()=>{ targetX=Math.max(0,getPanelX('panel-contact')); });
 
+
+// ── PROJECT DATA ──
+const projects = [
+  {
+    title: 'Alinea',
+    type: 'Web Design',
+    video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-alinea.mp4',
+    sections: [
+      { title: 'Project overview', text: 'As part of my Master\'s at ESCP Business School, my team developed Alinea, a copywriting agency website built from scratch. Moving away from standard corporate aesthetics, we aimed for a bold, editorial look using Elementor and vibe coding instead of templates. Our goal was to create a high-energy, interactive MVP that proves B2B services can be both creative and professional.' },
+      { title: 'Strategic navigation & UX', text: 'We prioritized a Desktop-First approach, specifically targeting B2B professionals (CEOs, Marketing Directors and Consultants) who vet agencies during work hours on laptops. To ensure a frictionless experience on a high-interaction site, we implemented a sticky header and scroll-to-top buttons for constant access to navigation. Each service page follows a consistent logic: we do not just list tasks, we showcase our philosophy and specific KPIs to align with client business goals.' },
+      { title: 'Evolution from wireframes', text: 'The project began with a structured content tree and Figma wireframes, though the final build evolved significantly. By building without templates, we explored new interaction and design possibilities that were not in our initial sketches. In addition, we focused heavily on accessibility, maintaining high color contrast and accurate alt-descriptions to ensure the bold design remained inclusive and easy to read.' },
+      { title: 'Validation & future scaling', text: 'To ensure the site was intuitive, we conducted user testing with 10 participants using think-aloud interviews. This allowed us to identify and fix minor navigation friction points before launch. More importantly, the testing highlighted a key challenge for the future: as we scale the MVP and add more pages, we will need to be careful to maintain this clarity and ensure the navigation does not become cluttered as the site grows.' }
+    ]
+  },
+  {
+    title: 'United Healthcare',
+    type: 'UX Design — CLIOS Submission — Eligibility Tool',
+    video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-united-healthcare.mp4',
+    sections: [
+      { title: 'Project overview', text: 'Developed for a Branded Content course at ESCP Business School, this project addresses a critical health equity gap where millions of eligible children remain uninsured. Our team created a cinematic campaign for United Healthcare that was selected as one of the top finalists for submission to the Student Clio Health Awards. The initiative moves beyond awareness by providing a tangible solution to help families navigate the complex eligibility requirements of programs like CHIP.' },
+      { title: 'Creative strategy & narrative', text: 'We developed a cinematic short film that uses a visual metaphor to represent the consequences of non-enrollment. The story follows eight-year-old Benjamin, who tries to pay for his cancer treatment with a piggy bank but finds himself unheard and unnoticed in a cold, bureaucratic system. This emotional narrative highlights a hidden reality: when families are unaware they qualify for support, their children effectively disappear from the healthcare system.' },
+      { title: 'Eligibility tool design', text: 'To ensure the transition from the film to the solution was seamless, we built the eligibility tool prototype to perfectly match the existing UnitedHealthcare website design. We prioritized clarity by using a classical form structure, including mandatory field asterisks and tooltips to explain why specific data is requested. The interface features helpful placeholders to clarify expected input, and we gave full control to the user, allowing them to navigate backward between questions or exit the form at any time.' },
+      { title: 'Functionality & user empowerment', text: 'The prototype is fully dynamic, with results that change instantly based on the data provided by the user. To respect user privacy, we included an option to opt out of marketing communications. Once the assessment is complete, the user is presented with structured information including FAQs and direct contact options. The final screen offers clear paths to either begin the official application immediately or retake the test.' },
+      { title: 'Media plan & impact', text: 'The campaign is set to launch on September 1st, 2026, to coincide with Childhood Cancer Awareness Month. We focused our geographic targeting on U.S. states with high uninsured rates, using high-impact OOH placements such as metro stations. This approach ensures repeated exposure in daily environments, supported by geo-targeted social media ads on TikTok and Instagram to lead families directly to our eligibility tool.' }
+    ]
+  },
+  {
+    title: 'Innocent',
+    type: 'Interaction Design',
+    video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-innocent.mp4',
+    sections: [
+      { title: 'Project overview', text: 'This experimental project focuses on "The Big Knit," an annual campaign by Innocent drinks where smoothies are sold with tiny, hand-knitted hats. For every hatted smoothie purchased, a portion of the proceeds helps the association Petits Frères des Pauvres provide fruits and vegetables to isolated elderly people. My goal was to design a vending machine interface that replicates the tactile, personalized experience of shopping.' },
+      { title: 'Seamless selection strategy', text: 'The core of the experience is a consolidated selection screen that displays both smoothie flavors and hat designs simultaneously, enabling users to visually match their choices. To minimize friction and cognitive load, I implemented a dynamic highlighting system where selecting an item adds a vibrant color contour while subtly dimming unselected options. The interface uses a conditional "Pay" button that remains inactive and grayed out until both a smoothie and a hat are selected.' },
+      { title: 'Order finalization & social impact', text: 'The final phase of the journey includes a concise order recap and integrated payment method selection to keep the transaction fast and efficient. To maintain the brand&#39;s playful tone, I replaced standard technical loading messages with thematic "knitting in progress" text during payment processing. Upon completion, a ready-to-go screen confirms the donation to Petits Frères des Pauvres, reinforcing the social purpose behind the purchase.' }
+    ]
+  },
+  {
+    title: 'La Pivoine',
+    type: 'Mobile UX',
+    video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-la-pivoine.mov',
+    sections: [
+      { title: 'Project overview', text: 'La Pivoine is a flower shop project focused on modernizing the traditional customer retention experience. Physical loyalty cards are often lost or forgotten, especially for occasional purchases like flowers. To solve this, I designed a digital loyalty card integrated directly into the smartphone\'s wallet application. This transition from physical to digital ensures the card is always accessible while allowing the business to gather more consistent data.' },
+      { title: 'Interactive wallet design', text: 'The prototype, framed on an iPhone 16 interface, mimics the native wallet experience to ensure user familiarity. Upon selecting the La Pivoine card, the user sees the brand name and a clear progress indicator showing their number of visits out of nine. The design recreates the nostalgia of a paper card with ten circles representing stamps, positioned above a functional QR code. This layout provides all necessary information at a single glance, including the specific incentive of a free bouquet on the tenth visit.' },
+      { title: 'Gamified information flow', text: 'The core interaction occurs at the point of sale: when the shop owner scans the QR code, a circle digitally transforms into a flower stamp. This visual update provides immediate gratification by mirroring the tactile feel of a physical stamp through a seamless digital interface. Once nine stamps are collected, the tenth circle changes into a gift stamp, triggering a celebratory pop-up.' },
+      { title: 'Driving conversion with navigation', text: 'To translate digital success into a store visit, the "free bouquet" pop-up includes a direct call-to-action button that opens a Google Maps link to the shop. By integrating navigation directly into the reward screen, I created a frictionless path for the user to claim their gift. This design completes a full circle, starting with a digital interaction in the wallet and ending with the customer standing in the shop to receive their flowers.' }
+    ]
+  }
+];
+
+const chalkOverlay = document.getElementById('chalk-overlay');
+const projectDetail = document.getElementById('project-detail');
+const detailContent = document.getElementById('detail-content');
+
+function openProject(idx) {
+  const p = projects[idx];
+  // Chalk wipe in
+  chalkOverlay.classList.remove('leaving');
+  chalkOverlay.classList.add('entering');
+  setTimeout(() => {
+    detailContent.innerHTML = `
+      <div class="detail-title">${p.title}</div>
+      <div class="detail-type">${p.type}</div>
+      <div class="detail-video"><video src="${p.video}" muted playsinline autoplay loop preload="metadata"></video></div>
+      ${p.sections.map(s => `
+      <div class="detail-section">
+        <div class="detail-section-title">${s.title}</div>
+        <p class="detail-text">${s.text}</p>
+      </div>`).join('')}
+      <div class="detail-nav">
+        <button class="detail-nav-btn" onclick="closeProject()">← Back to works</button>
+        <button class="detail-nav-btn" onclick="openProject(${(idx+1)%4})">Next project →</button>
+      </div>`;
+    projectDetail.classList.add('show');
+    setTimeout(() => projectDetail.classList.add('visible'), 30);
+    // Chalk wipe out
+    chalkOverlay.classList.remove('entering');
+    chalkOverlay.classList.add('leaving');
+    setTimeout(() => chalkOverlay.classList.remove('leaving'), 600);
+  }, 420);
+}
+
+function closeProject() {
+  chalkOverlay.classList.remove('leaving');
+  chalkOverlay.classList.add('entering');
+  setTimeout(() => {
+    projectDetail.classList.remove('visible');
+    setTimeout(() => projectDetail.classList.remove('show'), 350);
+    chalkOverlay.classList.remove('entering');
+    chalkOverlay.classList.add('leaving');
+    setTimeout(() => chalkOverlay.classList.remove('leaving'), 600);
+  }, 400);
+}
+
+document.querySelectorAll('.work-card').forEach(card => {
+  card.addEventListener('click', () => {
+    openProject(parseInt(card.dataset.project));
+  });
+});
+
+document.getElementById('detail-back').addEventListener('click', closeProject);
+
 </script>
+
+<!-- CHALK TRANSITION OVERLAY -->
+<div id="chalk-overlay"></div>
+
+<!-- PROJECT DETAIL -->
+<div id="project-detail">
+  <button class="detail-back" id="detail-back">
+    <svg width="20" height="12" viewBox="0 0 20 12"><path d="M19 6H1M6 1L1 6l5 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back to playground
+  </button>
+  <div id="detail-content"></div>
+</div>
+
 </body>
 </html>
