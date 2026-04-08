@@ -139,13 +139,41 @@ body.cursor-pill #cursor-ring { opacity: 0; }
 }
 .panel { flex-shrink: 0; height: 100vh; position: relative; overflow: hidden; }
 /* ---- HERO ---- */
-#panel-hero { width: 100vw; display: flex; align-items: center; }
+#panel-hero { width: 100vw; display: flex; align-items: center; justify-content: space-between; }
 #hero-circles { position: absolute; inset: 0; pointer-events: none; }
 #hero-content {
   position: relative; z-index: 2;
   padding: 0 80px;
   text-align: left;
-  max-width: 900px;
+  max-width: 540px;
+  flex-shrink: 0;
+}
+#hero-images {
+  position: relative; z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: center;
+  padding-right: 80px;
+  flex-shrink: 0;
+}
+.hero-img-item {
+  position: relative;
+  cursor: pointer;
+}
+.hero-img-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  transition: opacity .35s ease, transform .4s cubic-bezier(.34,1.3,.64,1);
+}
+.hero-img-item .img-circle { position: relative; }
+.hero-img-item .img-expand {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity .35s ease, transform .45s cubic-bezier(.34,1.3,.64,1);
 }
 .hero-line { overflow: visible; display: block; }
 .hero-line-inner {
@@ -755,7 +783,24 @@ h1.hero-title {
         </span>
       </p>
     </div>
-    <div class="hero-hint" id="hero-hint">
+    <div id="hero-images">
+      <div class="hero-img-item" data-circle="cercle-escalade.png" data-expand="escalade.png">
+        <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-escalade.png" alt="escalade">
+        <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/escalade.png" alt="escalade">
+      </div>
+      <div class="hero-img-item" data-circle="cercle-tourne-disque.png" data-expand="tourne-disque.png">
+        <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-tourne-disque.png" alt="tourne-disque">
+        <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/tourne-disque.png" alt="tourne-disque">
+      </div>
+      <div class="hero-img-item" data-circle="cercle-bouquet.png" data-expand="bouquet.png">
+        <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-bouquet.png" alt="bouquet">
+        <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/bouquet.png" alt="bouquet">
+      </div>
+      <div class="hero-img-item" data-circle="cercle-ordinateur.png" data-expand="ordinateur.png">
+        <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-ordinateur.png" alt="ordinateur">
+        <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/ordinateur.png" alt="ordinateur">
+      </div>
+    </div>
       <span style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(240,234,224,0.38)">scroll</span>
       <span class="hint-arrow">
         <svg width="24" height="16" viewBox="0 0 24 16" fill="none"><path d="M2 8h20M14 2l6 6-6 6" stroke="rgba(240,234,224,0.5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1119,12 +1164,7 @@ document.querySelectorAll('.nav-circle').forEach(nc=>{
 
 // HERO CIRCLES
 const base = 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/';
-const circleData=[
-  {img:'cercle-escalade.png',     expand:'escalade.png',     x:'10%',y:'12%',r:120,dur:8},
-  {img:'cercle-tourne-disque.png',expand:'tourne-disque.png',x:'78%',y:'10%',r:100,dur:11},
-  {img:'cercle-bouquet.png',      expand:'bouquet.png',      x:'82%',y:'62%',r:90, dur:13},
-  {img:'cercle-ordinateur.png',   expand:'ordinateur.png',   x:'8%', y:'70%',r:95, dur:9}
-];
+const circleData=[];
 const heroCirclesEl=document.getElementById('hero-circles');
 const heroCircleSVGs=[];
 circleData.forEach((c,i)=>{
@@ -1231,6 +1271,19 @@ cycleEl.addEventListener('click',async()=>{
   wIdx=(wIdx+1)%words.length;
   await new Promise(r=>setTimeout(r,80));
   typeWord(words[wIdx]);
+});
+
+// HERO IMAGE GRID click handlers
+document.querySelectorAll('.hero-img-item').forEach(item => {
+  let expanded = false;
+  const circle = item.querySelector('.img-circle');
+  const expand = item.querySelector('.img-expand');
+  item.addEventListener('click', () => {
+    expanded = !expanded;
+    circle.style.opacity = expanded ? '0' : '1';
+    expand.style.opacity = expanded ? '1' : '0';
+    expand.style.transform = expanded ? 'scale(1)' : 'scale(0.85)';
+  });
 });
 
 // SPLASH SCREEN - chalk writing char by char
