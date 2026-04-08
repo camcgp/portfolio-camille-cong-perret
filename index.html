@@ -422,7 +422,8 @@ h1.hero-title {
   background: var(--bg);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-left: 5vw;
   position: relative;
   overflow: hidden;
 }
@@ -431,12 +432,11 @@ h1.hero-title {
   white-space: nowrap;
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 .wave-phrase {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(28px, 4.5vw, 72px);
+  font-size: clamp(38px, 6vw, 96px);
   color: var(--chalk);
   filter: url(#chalk);
   display: flex;
@@ -445,17 +445,19 @@ h1.hero-title {
 .wave-char { display: inline-block; will-change: transform; }
 .chalk-arrow-element { position: absolute; pointer-events: none; }
 #arrow-middle {
-  top: -160px;
+  top: -100px;
   left: 22%;
-  width: 420px;
-  height: 130px;
+  width: 240px;
+  height: 80px;
 }
 #arrow-end {
-  right: -340px;
-  top: 50%;
-  width: 300px;
-  height: 100px;
-  transform: translateY(-55%);
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  width: 220px;
+  height: 80px;
+  margin-left: 20px;
+  transform: none;
 }
 .draw-path {
   fill: none;
@@ -682,7 +684,7 @@ h1.hero-title {
 
 <!-- SPLASH SCREEN -->
 <div id="splash">
-  <div class="splash-text" id="splash-text"><span class="splash-char" id="sc0" data-ci="0">w</span><span class="splash-char" id="sc1" data-ci="1">e</span><span class="splash-char" id="sc2" data-ci="2">l</span><span class="splash-char" id="sc3" data-ci="3">c</span><span class="splash-char" id="sc4" data-ci="4">o</span><span class="splash-char" id="sc5" data-ci="5">m</span><span class="splash-char" id="sc6" data-ci="6">e</span><span class="splash-char space" data-ci="7"> </span><span class="splash-char" id="sc8" data-ci="8">t</span><span class="splash-char" id="sc9" data-ci="9">o</span><span class="splash-char space" data-ci="10"> </span><span class="splash-char" id="sc11" data-ci="11">m</span><span class="splash-char" id="sc12" data-ci="12">y</span><br><span class="splash-char" id="sc13" data-ci="13">p</span><span class="splash-char" id="sc14" data-ci="14">l</span><span class="splash-char" id="sc15" data-ci="15">a</span><span class="splash-char" id="sc16" data-ci="16">y</span><span class="splash-char" id="sc17" data-ci="17">g</span><span class="splash-char" id="sc18" data-ci="18">r</span><span class="splash-char" id="sc19" data-ci="19">o</span><span class="splash-char" id="sc20" data-ci="20">u</span><span class="splash-char" id="sc21" data-ci="21">n</span><span class="splash-char" id="sc22" data-ci="22">d</span></div>
+  <div class="splash-text" id="splash-text"><span class="splash-char" id="sc0" data-ci="0" style="color:#FF3D1F">w</span><span class="splash-char" id="sc1" data-ci="1" style="color:#FFD000">e</span><span class="splash-char" id="sc2" data-ci="2" style="color:#00B06C">l</span><span class="splash-char" id="sc3" data-ci="3" style="color:#1A3FFF">c</span><span class="splash-char" id="sc4" data-ci="4" style="color:#FF3D1F">o</span><span class="splash-char" id="sc5" data-ci="5" style="color:#FFD000">m</span><span class="splash-char" id="sc6" data-ci="6" style="color:#00B06C">e</span><span class="splash-char space" data-ci="7"> </span><span class="splash-char" id="sc8" data-ci="8" style="color:#1A3FFF">t</span><span class="splash-char" id="sc9" data-ci="9" style="color:#FF3D1F">o</span><span class="splash-char space" data-ci="10"> </span><span class="splash-char" id="sc11" data-ci="11" style="color:#FFD000">m</span><span class="splash-char" id="sc12" data-ci="12" style="color:#00B06C">y</span><br><span class="splash-char" id="sc13" data-ci="13" style="color:#1A3FFF">p</span><span class="splash-char" id="sc14" data-ci="14" style="color:#FF3D1F">l</span><span class="splash-char" id="sc15" data-ci="15" style="color:#FFD000">a</span><span class="splash-char" id="sc16" data-ci="16" style="color:#00B06C">y</span><span class="splash-char" id="sc17" data-ci="17" style="color:#1A3FFF">g</span><span class="splash-char" id="sc18" data-ci="18" style="color:#FF3D1F">r</span><span class="splash-char" id="sc19" data-ci="19" style="color:#FFD000">o</span><span class="splash-char" id="sc20" data-ci="20" style="color:#00B06C">u</span><span class="splash-char" id="sc21" data-ci="21" style="color:#1A3FFF">n</span><span class="splash-char" id="sc22" data-ci="22" style="color:#FF3D1F">d</span></div>
 </div>
 <div id="chalk-tip"></div>
 <div id="progress-bar"><div id="progress-fill"></div></div>
@@ -773,8 +775,7 @@ h1.hero-title {
           M 558,160 L 575,172 L 585,158
         "/>
       </svg>
-      <div class="wave-phrase" id="wave-phrase"></div>
-      <svg id="arrow-end" class="chalk-arrow-element" viewBox="0 0 520 160" preserveAspectRatio="xMidYMid meet">
+      <div class="wave-phrase" id="wave-phrase"></div><svg id="arrow-end" class="chalk-arrow-element" viewBox="0 0 520 160" preserveAspectRatio="xMidYMid meet">
         <path class="draw-path" d="
           M 5,85
           C 35,85 62,92 90,88
@@ -1110,21 +1111,46 @@ document.querySelectorAll('.nav-circle').forEach(nc=>{
 });
 
 // HERO CIRCLES
+const base = 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/';
 const circleData=[
-  {color:'#FF3D1F',fill:'rgba(255,61,31,0.08)',x:'10%',y:'12%',r:120,dur:8},
-  {color:'#FF8C00',fill:'rgba(255,140,0,0.07)',x:'74%',y:'8%',r:100,dur:11},
-  {color:'#FFD000',fill:'rgba(255,208,0,0.07)',x:'84%',y:'60%',r:85,dur:13},
-  {color:'#00B06C',fill:'rgba(0,176,108,0.07)',x:'6%',y:'68%',r:95,dur:9},
-  {color:'#1A3FFF',fill:'rgba(26,63,255,0.07)',x:'52%',y:'82%',r:75,dur:12}
+  {img:'cercle-escalade.png',    expand:'escalade.png',    x:'10%',y:'12%',r:120,dur:8},
+  {img:'cercle-tourne-disque.png',expand:'tourne-disque.png',x:'74%',y:'8%', r:100,dur:11},
+  {img:'cercle-bouquet.png',     expand:'bouquet.png',     x:'84%',y:'60%',r:85, dur:13},
+  {img:'cercle-ordinateur.png',  expand:'ordinateur.png',  x:'6%', y:'68%',r:95, dur:9},
+  {img:'cercle-escalade.png',    expand:'escalade.png',    x:'52%',y:'82%',r:75, dur:12}
 ];
 const heroCirclesEl=document.getElementById('hero-circles');
 const heroCircleSVGs=[];
 circleData.forEach((c,i)=>{
+  const sz=c.r*2;
   const wrap=document.createElement('div');
-  wrap.style.cssText=`position:absolute;left:${c.x};top:${c.y};transform:translate(-50%,-50%);opacity:0;transition:opacity .3s;`;
+  wrap.style.cssText=`position:absolute;left:${c.x};top:${c.y};transform:translate(-50%,-50%);opacity:0;transition:opacity .3s;width:${sz}px;height:${sz}px;cursor:pointer;`;
   wrap.id=`hc-${i}`;
-  const sz=c.r*2+10, circ=Math.round(2*Math.PI*c.r);
-  wrap.innerHTML=`<svg width="${sz}" height="${sz}" viewBox="0 0 ${sz} ${sz}"><circle cx="${sz/2}" cy="${sz/2}" r="${c.r}" fill="${c.fill}" stroke="${c.color}" stroke-width="1.5" stroke-dasharray="${circ}" stroke-dashoffset="${circ}" id="hcirc-${i}" style="transition:stroke-dashoffset 1.2s ease;"/></svg>`;
+
+  // Circle image
+  const img=document.createElement('img');
+  img.src=base+c.img;
+  img.style.cssText=`width:100%;height:100%;object-fit:contain;display:block;transition:transform .4s ease,opacity .3s;`;
+  img.id=`hcimg-${i}`;
+  wrap.appendChild(img);
+
+  // Expanded image (hidden)
+  const imgExp=document.createElement('img');
+  imgExp.src=base+c.expand;
+  imgExp.style.cssText=`position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transform:scale(0.8);transition:transform .45s cubic-bezier(.34,1.3,.64,1),opacity .3s;pointer-events:none;`;
+  imgExp.id=`hcexp-${i}`;
+  wrap.appendChild(imgExp);
+
+  // Click: swap to expanded
+  let expanded=false;
+  wrap.addEventListener('click',()=>{
+    expanded=!expanded;
+    img.style.opacity=expanded?'0':'1';
+    imgExp.style.opacity=expanded?'1':'0';
+    imgExp.style.transform=expanded?'scale(1)':'scale(0.8)';
+    img.style.transform=expanded?'scale(1.1)':'scale(1)';
+  });
+
   heroCirclesEl.appendChild(wrap);
   const floatKf=[
     {transform:`translate(-50%,-50%) translateY(0px) rotate(0deg)`},
@@ -1132,7 +1158,7 @@ circleData.forEach((c,i)=>{
     {transform:`translate(-50%,-50%) translateY(0px) rotate(0deg)`}
   ];
   wrap._float=()=>wrap.animate(floatKf,{duration:c.dur*1000,iterations:Infinity,easing:'ease-in-out'});
-  heroCircleSVGs.push({wrap,circ:wrap.querySelector('circle'),r:c.r,color:c.color});
+  heroCircleSVGs.push({wrap, circ:null, r:c.r, color:'transparent'});
 });
 
 // Hero circles ready, drawn by splash sequence
@@ -1246,7 +1272,7 @@ function initHero() {
     if(d2) d2.style.opacity='1';
   }, 700);
   heroCircleSVGs.forEach((c,i) => {
-    setTimeout(()=>{ c.wrap.style.opacity='1'; c.circ.style.strokeDashoffset='0'; setTimeout(()=>c.wrap._float(),1300); }, i*150);
+    setTimeout(()=>{ c.wrap.style.opacity='1'; setTimeout(()=>c.wrap._float(),1300); }, i*150);
   });
 }
 
@@ -1254,8 +1280,8 @@ runSplash();
 
 // WAVE TEXT - init chars
 const waveTarget = document.getElementById('wave-phrase');
-const textStr = 'Curiosity leads me. Design is where I land.';
 if(waveTarget) {
+  const textStr = 'Curiosity leads me. Design is where I land.';
   waveTarget.innerHTML = textStr.split('').map(ch =>
     `<span class="wave-char">${ch === ' ' ? '&nbsp;' : ch}</span>`
   ).join('');
