@@ -363,13 +363,15 @@ h1.hero-title {
 }
 .about-bio strong { color: var(--chalk); font-weight: 500; }
 .about-photo {
-  width: 200px; aspect-ratio: 1/1;
+  width: 100%; aspect-ratio: 1/1;
+  max-width: none;
   background: transparent;
   border-radius: 8px;
   transform: rotate(-1.5deg);
   position: relative; overflow: hidden;
   margin-bottom: 18px;
   border: 1.5px dashed #d4ad30;
+  box-sizing: border-box;
 }
 .about-photo img {
   width: 100%; height: 100%;
@@ -950,27 +952,29 @@ h1.hero-title {
         Through marketing and communication, I built a <strong>sensitivity to design</strong> and user journeys.
         Now pivoting to <strong>product design</strong> - driven by <strong>curiosity</strong>, empathy, and a strong attention to detail.
       </p>
-      <div class="about-photo panel-reveal" style="transition-delay:.2s">
-        <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/portrait-craie.png"
-             alt="Camille Cong-Perret"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="about-photo-ph" style="display:none;">[ portrait craie.png ]</div>
-      </div>
-      <div class="lang-tags panel-reveal" style="transition-delay:.3s;margin-top:14px">
-        <span class="lang-tag">French - native</span>
-        <span class="lang-tag">English - C1, TOEIC 980</span>
+      <div style="display:flex;flex-direction:column;width:fit-content;">
+        <div class="about-photo panel-reveal" style="transition-delay:.2s;width:100%;">
+          <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/portrait-craie.png"
+               alt="Camille Cong-Perret"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="about-photo-ph" style="display:none;">[ portrait craie.png ]</div>
+        </div>
+        <div class="lang-tags panel-reveal" style="transition-delay:.3s;margin-top:14px;flex-wrap:nowrap;">
+          <span class="lang-tag">French - native</span>
+          <span class="lang-tag">English - C1, TOEIC 980</span>
+        </div>
       </div>
     </div>
     <div class="about-right">
       <div class="illus-frame" id="illus-frame">
         <div id="il-hint" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .4s;">
-          <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/point-interrogation.png" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">
+          <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/point-interrogation.png" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">
         </div>
-        <img id="il0" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-1.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s ease;">
-        <img id="il1" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-2.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s ease;">
-        <img id="il2" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-3.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s ease;">
-        <img id="il3" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-4.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s ease;">
-        <img id="il4" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-5.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s ease;">
+        <img id="il0" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-1.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
+        <img id="il1" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-2.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
+        <img id="il2" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-3.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
+        <img id="il3" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-4.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
+        <img id="il4" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-5.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
       </div>
       <h3 class="checklist-title">What I bring</h3>
       <ul class="checklist" id="checklist">
