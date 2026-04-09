@@ -461,7 +461,8 @@ h1.hero-title {
 .cta-connect {
   display: inline-flex; align-items: center; gap: 10px;
   border: 1.5px dashed rgba(240,234,224,0.38);
-  padding: 11px 22px;
+  padding: 11px 16px;
+  width: fit-content; align-self: flex-start;
   font-family: var(--font-display); font-weight: 700; font-size: 18px;
   color: var(--chalk); cursor: none;
   opacity: 0; transform: scale(.9);
@@ -535,7 +536,7 @@ h1.hero-title {
 /* ---- WORKS ---- */
 #panel-works { width: 90vw; position: relative; }
 .works-title {
-  position: absolute; top: 56px; left: 72px;
+  position: absolute; top: 80px; left: 72px;
   font-family: var(--font-display); font-weight: 700;
   font-size: clamp(44px,5.5vw,88px);
   letter-spacing: .01em; line-height: .9;
@@ -805,7 +806,7 @@ h1.hero-title {
   margin-bottom: 60px; overflow: hidden;
 }
 .detail-video video { width:100%; height:100%; object-fit:cover; display:block; }
-.detail-section { margin-bottom: 44px; max-width: 720px; }
+.detail-section { margin-bottom: 44px; }
 .detail-section-title {
   font-family: var(--font-display); font-weight: 700;
   font-size: 22px; color: var(--chalk); margin-bottom: 14px;
@@ -828,6 +829,28 @@ h1.hero-title {
 }
 .detail-nav-btn:hover { color: var(--chalk); }
 
+
+.detail-link-wrap { margin-bottom: 40px; }
+.detail-link {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--chalk-muted);
+  text-decoration: none;
+  transition: color .2s, font-family .15s;
+  display: inline-block;
+}
+.detail-link:hover {
+  color: var(--c-red);
+  font-style: italic;
+}
+.detail-link::before {
+  content: 'explore the website → ';
+  color: var(--chalk-muted);
+  font-style: normal;
+}
+.detail-link:hover::before {
+  color: var(--c-red);
+}
 </style>
 </head>
 <body>
@@ -1592,6 +1615,7 @@ const projects = [
   {
     title: 'Alinea',
     color: '#FF3D1F',
+    link: 'https://alinea.escpeuropemadrid.com/',
     type: 'Web Design',
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-alinea.mp4',
     sections: [
@@ -1604,7 +1628,7 @@ const projects = [
   {
     title: 'United Healthcare',
     color: '#1A3FFF',
-    type: 'UX Design — CLIOS Submission — Eligibility Tool',
+    type: 'UX Design for Student Clio Health Submission',
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-united-healthcare.mp4',
     sections: [
       { title: 'Project overview', text: 'Developed for a Branded Content course at ESCP Business School, this project addresses a critical health equity gap where millions of eligible children remain uninsured. Our team created a cinematic campaign for United Healthcare that was selected as one of the top finalists for submission to the Student Clio Health Awards. The initiative moves beyond awareness by providing a tangible solution to help families navigate the complex eligibility requirements of programs like CHIP.' },
@@ -1654,6 +1678,7 @@ function openProject(idx) {
       <div class="detail-title">${p.title}</div>
       <div class="detail-type">${p.type}</div>
       <div class="detail-video"><video src="${p.video}" muted playsinline autoplay loop preload="metadata"></video></div>
+      ${p.link ? `<div class="detail-link-wrap"><a href="${p.link}" target="_blank" class="detail-link">${p.link}</a></div>` : ''}
       ${p.sections.map(s => `
       <div class="detail-section">
         <div class="detail-section-title" style="--line-color:${p.color}">${s.title}</div>
