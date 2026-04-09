@@ -102,17 +102,17 @@ body.cursor-pill #cursor-ring { opacity: 0; }
   position: fixed;
   bottom: 28px; left: 50%;
   transform: translateX(-50%);
-  display: flex; gap: 14px;
+  display: flex; gap: 20px; align-items: flex-end;
   z-index: 1000;
   opacity: 0; transition: opacity .6s;
   pointer-events: none;
 }
 #bottom-nav.visible { opacity: 1; pointer-events: all; }
-.nav-circle { position: relative; width: 36px; height: 36px; cursor: none; }
-.nav-circle svg { width: 36px; height: 36px; overflow: visible; }
-.nav-circle .nc-path { fill: transparent; stroke-width: 2; transition: fill .3s; }
-.nav-circle.active .nc-path { fill-opacity: .85; }
-.nav-circle:hover .nc-path { fill-opacity: .3; }
+.nav-circle { position: relative; width: 52px; height: 52px; cursor: none; }
+.nc-img { width: 100%; height: 100%; object-fit: contain; display: block;
+  transition: transform .3s cubic-bezier(.34,1.3,.64,1), opacity .3s; opacity: 0.7; }
+.nav-circle:hover .nc-img { transform: scale(1.15); opacity: 1; }
+.nav-circle.active .nc-img { opacity: 1; }
 .nav-label {
   position: absolute;
   bottom: calc(100% + 6px); left: 50%;
@@ -317,7 +317,7 @@ h1.hero-title {
   display: flex; align-items: center; gap: 10px;
   opacity: 0; transition: opacity .6s 2s;
 }
-.hero-hint.show { opacity: .4; }
+.hero-hint.show { opacity: .3; }
 .hint-arrow { animation: hint-bounce 2s ease-in-out infinite; }
 @keyframes hint-bounce {
   0%,100% { transform: translateX(0); }
@@ -377,7 +377,7 @@ h1.hero-title {
   font-size: 15px; line-height: 1.8;
   color: var(--chalk-muted); margin-bottom: 28px;
   text-align: justify;
-  max-width: 340px;
+  max-width: 220px;
 }
 .about-bio strong { color: var(--chalk); font-weight: 500; }
 .about-photo {
@@ -698,7 +698,7 @@ h1.hero-title {
   border-radius: 8px; display: flex; align-items: center; justify-content: center;
   color: var(--chalk-dim); font-size: 13px; margin-bottom: 56px;
 }
-.detail-section { margin-bottom: 44px; max-width: 66%; margin-left: auto; margin-right: auto; text-align: center; }
+.detail-section { margin-bottom: 44px; max-width: 50%; margin-left: auto; margin-right: auto; text-align: center; }
 .detail-section-title {
   font-family: var(--font-display); font-weight: 700; font-size: 22px;
   color: var(--chalk); margin-bottom: 14px;
@@ -807,7 +807,7 @@ h1.hero-title {
   margin-bottom: 60px; overflow: hidden;
 }
 .detail-video video { width:100%; height:100%; object-fit:cover; display:block; }
-.detail-section { margin-bottom: 44px; max-width: 66%; margin-left: auto; margin-right: auto; text-align: center; }
+.detail-section { margin-bottom: 44px; max-width: 50%; margin-left: auto; margin-right: auto; text-align: center; }
 .detail-section-title {
   font-family: var(--font-display); font-weight: 700;
   font-size: 22px; color: var(--chalk); margin-bottom: 14px;
@@ -878,20 +878,20 @@ h1.hero-title {
 
 
 <nav id="bottom-nav">
-  <div class="nav-circle active" data-panel="0">
-    <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" class="nc-path" stroke="var(--c-red)" stroke-width="2"/></svg>
+  <div class="nav-circle nav-img-btn" data-panel="0">
+    <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-bouquet.png" alt="home" class="nc-img">
     <span class="nav-label">Home</span>
   </div>
-  <div class="nav-circle" data-panel="1">
-    <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" class="nc-path" stroke="var(--c-orange)" stroke-width="2"/></svg>
+  <div class="nav-circle nav-img-btn" data-panel="1">
+    <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-escalade.png" alt="works" class="nc-img">
     <span class="nav-label">Works</span>
   </div>
-  <div class="nav-circle" data-panel="2">
-    <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" class="nc-path" stroke="var(--c-yellow)" stroke-width="2"/></svg>
+  <div class="nav-circle nav-img-btn" data-panel="2">
+    <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-tourne-disque.png" alt="about" class="nc-img">
     <span class="nav-label">About</span>
   </div>
-  <div class="nav-circle" data-panel="3">
-    <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" class="nc-path" stroke="var(--c-blue)" stroke-width="2"/></svg>
+  <div class="nav-circle nav-img-btn" data-panel="3">
+    <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-ordinateur.png" alt="contact" class="nc-img">
     <span class="nav-label">Contact</span>
   </div>
 </nav>
@@ -1388,10 +1388,11 @@ function animHeroToNav() {
   const progress = Math.max(0, Math.min(1, currentX / (window.innerWidth * 0.8)));
   const eased = progress < 0.5 ? 2*progress*progress : 1-Math.pow(-2*progress+2,2)/2;
 
+  const navMap = [1, 2, 0, 3]; // hero order → nav slot (escalade→works, tourne→about, bouquet→home, ordin→contact)
   const items = document.querySelectorAll('.hero-img-item');
   items.forEach((el, i) => {
     const start = heroImgStartPos[i];
-    const target = navTargetPos[i];
+    const target = navTargetPos[navMap[i]];
     if(!start || !target) return;
 
     const dx = (target.cx - start.cx) * eased;
