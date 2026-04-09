@@ -702,7 +702,7 @@ h1.hero-title {
   color: var(--chalk); margin-bottom: 14px;
   display: flex; align-items: center; gap: 12px;
 }
-.detail-section-title::before { content: ''; display: block; width: 28px; height: 1px; background: var(--accent); }
+.detail-section-title::before { content: ''; display: block; width: 28px; height: 1.5px; background: var(--line-color, var(--accent)); }
 .detail-text { color: var(--chalk-muted); line-height: 1.8; font-size: 16px; }
 .detail-nav {
   display: flex; justify-content: space-between;
@@ -772,6 +772,8 @@ h1.hero-title {
   background: var(--bg);
   z-index: 9000;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   opacity: 0; transform: translateY(12px);
   transition: opacity 0.35s ease, transform 0.35s ease;
   padding: 80px 80px;
@@ -810,7 +812,7 @@ h1.hero-title {
   display: flex; align-items: center; gap: 12px;
 }
 .detail-section-title::before {
-  content:''; display:block; width:28px; height:1.5px; background: var(--accent); flex-shrink:0;
+  content:''; display:block; width:28px; height:1.5px; background: var(--line-color, var(--accent)); flex-shrink:0;
 }
 .detail-text { color: var(--chalk-muted); line-height: 1.85; font-size: 15px; }
 .detail-nav {
@@ -892,21 +894,21 @@ h1.hero-title {
       
       
       </div>
-      <div class="hero-img-item" style="width:220px;height:220px;top:10vh;left:46%;transform:rotate(4deg);">
+      <div class="hero-img-item" style="width:220px;height:220px;top:28vh;left:46%;transform:rotate(4deg);">
         <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-tourne-disque.png" alt="tourne-disque">
         <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/tourne-disque.png" alt="tourne-disque">
 <div class="hero-annotation" style="top:-110px;right:10px;display:flex;flex-direction:column;align-items:flex-end;"><div class="hero-annotation-text" style="color:#cd5242;margin-bottom:6px;text-align:right;">how i blast music at home</div><svg width="100" height="100" viewBox="0 0 100 100" fill="none"><defs><marker id="mcd5242" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9" fill="none" stroke="#cd5242" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><path d="M 90,5 C 85,45 50,75 10,95" stroke="#cd5242" stroke-width="2" stroke-linecap="round" marker-end="url(#mcd5242)"/></svg></div>
       
       
       </div>
-      <div class="hero-img-item" style="width:230px;height:230px;top:50vh;left:4%;transform:rotate(5deg);">
+      <div class="hero-img-item" style="width:230px;height:230px;top:48vh;left:2%;transform:rotate(5deg);">
         <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-bouquet.png" alt="bouquet">
         <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/bouquet.png" alt="bouquet">
 <div class="hero-annotation" style="bottom:-108px;left:10px;display:flex;flex-direction:column;align-items:flex-start;"><svg width="100" height="100" viewBox="0 0 100 100" fill="none"><defs><marker id="m4f6753" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9" fill="none" stroke="#4f6753" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><path d="M 10,95 C 15,55 50,25 90,5" stroke="#4f6753" stroke-width="2" stroke-linecap="round" marker-end="url(#m4f6753)"/></svg><div class="hero-annotation-text" style="color:#4f6753;margin-top:6px;text-align:left;">my favorite flowers</div></div>
       
       
       </div>
-      <div class="hero-img-item" style="width:230px;height:230px;top:42vh;left:46%;transform:rotate(-4deg);">
+      <div class="hero-img-item" style="width:230px;height:230px;top:56vh;left:46%;transform:rotate(-4deg);">
         <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-ordinateur.png" alt="ordinateur">
         <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/ordinateur.png" alt="ordinateur">
 <div class="hero-annotation" style="bottom:-108px;right:10px;display:flex;flex-direction:column;align-items:flex-end;"><svg width="100" height="100" viewBox="0 0 100 100" fill="none"><defs><marker id="m345683" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9" fill="none" stroke="#345683" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><path d="M 90,95 C 85,55 50,25 10,5" stroke="#345683" stroke-width="2" stroke-linecap="round" marker-end="url(#m345683)"/></svg><div class="hero-annotation-text" style="color:#345683;margin-top:6px;text-align:right;">where my creativity unfolds</div></div>
@@ -1170,7 +1172,11 @@ function calcMax(){ maxX = container.scrollWidth - window.innerWidth; }
 window.addEventListener('resize', ()=>{ calcMax(); heroImgStartPos=null; navTargetPos=null; });
 setTimeout(calcMax, 300);
 
-window.addEventListener('wheel',e=>{ e.preventDefault(); targetX=Math.max(0,Math.min(targetX+e.deltaY*1.4,maxX)); },{passive:false});
+window.addEventListener('wheel',e=>{
+  if(projectDetail && projectDetail.classList.contains('show')) return; // let detail scroll
+  e.preventDefault();
+  targetX=Math.max(0,Math.min(targetX+e.deltaY*1.4,maxX));
+},{passive:false});
 
 let touchStartX=0, touchStartY=0;
 window.addEventListener('touchstart',e=>{ touchStartX=e.touches[0].clientX; touchStartY=e.touches[0].clientY; },{passive:true});
@@ -1585,6 +1591,7 @@ document.getElementById('cta-connect')?.addEventListener('click',()=>{ targetX=M
 const projects = [
   {
     title: 'Alinea',
+    color: '#FF3D1F',
     type: 'Web Design',
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-alinea.mp4',
     sections: [
@@ -1596,6 +1603,7 @@ const projects = [
   },
   {
     title: 'United Healthcare',
+    color: '#1A3FFF',
     type: 'UX Design — CLIOS Submission — Eligibility Tool',
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-united-healthcare.mp4',
     sections: [
@@ -1608,6 +1616,7 @@ const projects = [
   },
   {
     title: 'Innocent',
+    color: '#00B06C',
     type: 'Interaction Design',
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-innocent.mp4',
     sections: [
@@ -1618,6 +1627,7 @@ const projects = [
   },
   {
     title: 'La Pivoine',
+    color: '#FFD000',
     type: 'Mobile UX',
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-la-pivoine.mov',
     sections: [
@@ -1635,6 +1645,7 @@ const detailContent = document.getElementById('detail-content');
 
 function openProject(idx) {
   const p = projects[idx];
+  document.body.style.overflow = 'hidden'; // keep body hidden, detail handles own scroll
   // Chalk wipe in
   chalkOverlay.classList.remove('leaving');
   chalkOverlay.classList.add('entering');
@@ -1645,13 +1656,14 @@ function openProject(idx) {
       <div class="detail-video"><video src="${p.video}" muted playsinline autoplay loop preload="metadata"></video></div>
       ${p.sections.map(s => `
       <div class="detail-section">
-        <div class="detail-section-title">${s.title}</div>
+        <div class="detail-section-title" style="--line-color:${p.color}">${s.title}</div>
         <p class="detail-text">${s.text}</p>
       </div>`).join('')}
       <div class="detail-nav">
-        <button class="detail-nav-btn" onclick="closeProject()">← Back to works</button>
-        <button class="detail-nav-btn" onclick="openProject(${(idx+1)%4})">Next project →</button>
+        <button class="detail-nav-btn" onclick="openProject((${idx}+3)%4); projectDetail.scrollTop=0;">← Previous project</button>
+        <button class="detail-nav-btn" onclick="openProject((${idx}+1)%4); projectDetail.scrollTop=0;">Next project →</button>
       </div>`;
+    projectDetail.scrollTop = 0;
     projectDetail.classList.add('show');
     setTimeout(() => projectDetail.classList.add('visible'), 30);
     // Chalk wipe out
@@ -1670,6 +1682,10 @@ function closeProject() {
     chalkOverlay.classList.remove('entering');
     chalkOverlay.classList.add('leaving');
     setTimeout(() => chalkOverlay.classList.remove('leaving'), 600);
+    document.body.style.overflow = '';
+    // Scroll to works section
+    const worksPanel = document.getElementById('panel-works');
+    if(worksPanel) targetX = worksPanel.offsetLeft;
   }, 400);
 }
 
