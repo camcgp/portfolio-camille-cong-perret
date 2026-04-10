@@ -338,6 +338,7 @@ h1.hero-title {
 }
 .about-right {
   padding: 56px 72px 56px 0px;
+  margin-left: -32px;
   display: flex; flex-direction: row; align-items: center; gap: 48px;
   overflow-y: auto; scrollbar-width: none;
 }
@@ -519,7 +520,7 @@ h1.hero-title {
 }
 
 /* ---- WORKS ---- */
-#panel-works { width: 90vw; position: relative; }
+#panel-works { width: 100vw; position: relative; }
 .works-title {
   position: absolute; top: 80px; left: 72px;
   font-family: var(--font-display); font-weight: 700;
@@ -602,7 +603,7 @@ h1.hero-title {
 #panel-contact {
   width: 100vw;
   display: flex; flex-direction: column; justify-content: center;
-  padding: 80px 100px; position: relative;
+  padding: 80px 100px 80px 160px; position: relative;
 }
 .contact-blob { position: absolute; bottom: -40px; right: -40px; opacity: .05; pointer-events: none; }
 .contact-headline {
@@ -990,7 +991,7 @@ h1.hero-title {
 
     <!-- Card 1 - Alinea -->
     <div class="work-card" data-project="0"
-         style="top:34vh;left:2vw;transform:rotate(-4deg);z-index:3;">
+         style="top:26vh;left:2vw;transform:rotate(-4deg);z-index:3;">
       <div class="card-pin" style="background:var(--c-red);"></div>
             <div class="card-img-placeholder">
         <div class="card-cover" style="background: linear-gradient(135deg, #1a1a1a 60%, color-mix(in srgb, var(--c-red) 12%, #1a1a1a));">
@@ -1013,7 +1014,7 @@ h1.hero-title {
 
     <!-- Card 2 - United Healthcare -->
     <div class="work-card" data-project="1"
-         style="top:54vh;left:20vw;transform:rotate(2.5deg);z-index:2;">
+         style="top:46vh;left:20vw;transform:rotate(2.5deg);z-index:2;">
       <div class="card-pin" style="background:var(--c-blue);"></div>
             <div class="card-img-placeholder">
         <div class="card-cover" style="background: linear-gradient(135deg, #1a1a1a 60%, color-mix(in srgb, var(--c-blue) 12%, #1a1a1a));">
@@ -1036,7 +1037,7 @@ h1.hero-title {
 
     <!-- Card 3 - Innocent -->
     <div class="work-card" data-project="2"
-         style="top:34vh;left:38vw;transform:rotate(1deg);z-index:4;">
+         style="top:26vh;left:38vw;transform:rotate(1deg);z-index:4;">
       <div class="card-pin" style="background:var(--c-green);"></div>
             <div class="card-img-placeholder">
         <div class="card-cover" style="background: linear-gradient(135deg, #1a1a1a 60%, color-mix(in srgb, var(--c-green) 12%, #1a1a1a));">
@@ -1059,7 +1060,7 @@ h1.hero-title {
 
     <!-- Card 4 - La Pivoine -->
     <div class="work-card" data-project="3"
-         style="top:54vh;left:56vw;transform:rotate(-3deg);z-index:3;">
+         style="top:46vh;left:56vw;transform:rotate(-3deg);z-index:3;">
       <div class="card-pin" style="background:var(--c-yellow);"></div>
             <div class="card-img-placeholder">
         <div class="card-cover" style="background: linear-gradient(135deg, #1a1a1a 60%, color-mix(in srgb, var(--c-yellow) 12%, #1a1a1a));">
@@ -1132,7 +1133,7 @@ h1.hero-title {
 <div class="panel" id="panel-contact">
     <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/logo.png"
          alt=""
-         style="position:absolute;top:-18%;right:-5%;width:52%;max-width:490px;transform:rotate(-8deg);opacity:0.95;pointer-events:none;z-index:0;">
+         style="position:absolute;top:-22%;right:-8%;width:72%;max-width:900px;transform:rotate(-8deg);opacity:0.95;pointer-events:none;z-index:0;">
     <div class="contact-headline panel-reveal">Let's build<br>together.</div>
     <div class="chalk-arrow-wrap" id="chalk-arrow">
       <svg class="chalk-arrow-svg" width="72" height="28" viewBox="0 0 72 28">
@@ -1746,13 +1747,7 @@ document.getElementById('detail-back').addEventListener('click', closeProject);
   const panels = ['panel-hero','panel-works','panel-about','panel-contact'];
   el.addEventListener('click', () => {
     const target = document.getElementById(panels[i]);
-    if(target) {
-      const panelW = target.offsetWidth;
-      const viewW = window.innerWidth;
-      // Center narrow panels, left-align full-width panels
-      const offset = panelW < viewW ? Math.max(0, target.offsetLeft - (viewW - panelW) / 2) : target.offsetLeft;
-      targetX = offset;
-    }
+    if(target) { targetX = target.offsetLeft; }
   });
   el.addEventListener('mouseenter', () => document.body.classList.add('cursor-open'));
   el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-open'));
