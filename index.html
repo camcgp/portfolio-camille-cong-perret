@@ -683,7 +683,7 @@ h1.hero-title {
   border-radius: 8px; display: flex; align-items: center; justify-content: center;
   color: var(--chalk-dim); font-size: 13px; margin-bottom: 56px;
 }
-.detail-section { margin-bottom: 44px; max-width: 72%; margin-left: auto; margin-right: auto; text-align: center; }
+.detail-section { margin-bottom: 44px; max-width: 56%; margin-left: auto; margin-right: auto; text-align: center; }
 .detail-section-title {
   font-family: var(--font-display); font-weight: 700; font-size: 22px;
   color: var(--chalk); margin-bottom: 14px;
@@ -792,7 +792,7 @@ h1.hero-title {
   margin-bottom: 60px; overflow: hidden;
 }
 .detail-video video { width:100%; height:100%; object-fit:cover; display:block; }
-.detail-section { margin-bottom: 44px; max-width: 72%; margin-left: auto; margin-right: auto; text-align: center; }
+.detail-section { margin-bottom: 44px; max-width: 56%; margin-left: auto; margin-right: auto; text-align: center; }
 .detail-section-title {
   font-family: var(--font-display); font-weight: 700;
   font-size: 22px; color: var(--chalk); margin-bottom: 14px;
@@ -925,7 +925,7 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
 .cs-row-imgs { display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center; }
 .cs-row-imgs img,.cs-row-imgs video { width:100%;border-radius:8px;display:block;object-fit:contain;max-height:220px; }
 /* ── CASE STUDY TEXT WIDTH ── */
-.detail-section { margin-bottom:44px;max-width:52%;margin-left:auto;margin-right:auto;text-align:center; }
+.detail-section { margin-bottom:44px;max-width:56%;margin-left:auto;margin-right:auto;text-align:center; }
 /* ── MEDIA SIZES ── */
 .detail-media { margin:60px auto 80px;max-width:88%; }
 .detail-media-full video { object-fit:contain;background:#111;max-height:400px;display:block;width:100%;border-radius:8px; }
@@ -934,6 +934,53 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
 .detail-media-2col img,.detail-media-2col video { width:100%;border-radius:8px;display:block;object-fit:contain;max-height:260px;background:#111; }
 .detail-media-3col { display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;align-items:center; }
 .detail-media-3col img,.detail-media-3col video { width:100%;border-radius:8px;display:block;object-fit:contain;max-height:220px; }
+
+/* ── SCROLL RIGHT INDICATOR ── */
+#scroll-right {
+  position: fixed;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 500;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+#scroll-right.show { opacity: 1; }
+#scroll-right .sr-text {
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(240,234,224,0.36);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+#scroll-right .sr-arrow {
+  animation: sr-bounce 2s ease-in-out infinite;
+}
+@keyframes sr-bounce {
+  0%,100% { transform: translateX(0); }
+  50%      { transform: translateX(6px); }
+}
+
+/* ── CONSISTENT BORDER RADIUS FOR CASE STUDY MEDIA ── */
+.detail-media-full img,
+.detail-media-full video,
+.detail-media-2col img,
+.detail-media-2col video,
+.detail-media-3col img,
+.detail-media-3col video,
+.cs-row-imgs img,
+.cs-row-imgs video { border-radius: 6px !important; }
+
+/* ── ALINEA LINK HOVER ── */
+.alinea-link { color: var(--chalk); text-decoration: none; transition: color .2s, font-style .15s; }
+.alinea-link:hover { color: var(--c-red); font-style: italic; }
 
 </style>
 </head>
@@ -961,6 +1008,16 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
 
 
 
+
+<!-- SCROLL RIGHT INDICATOR -->
+<div id="scroll-right">
+  <span class="sr-text">Scroll</span>
+  <span class="sr-arrow">
+    <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
+      <path d="M8 2v20M2 14l6 6 6-6" stroke="rgba(240,234,224,0.36)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>
+</div>
 
 <div id="scroll-container">
 <div class="panel" id="panel-hero">
@@ -1275,6 +1332,8 @@ document.querySelectorAll('.work-card').forEach(card=>{
 const container = document.getElementById('scroll-container');
 let targetX=0, currentX=0, maxX=0;
 function calcMax(){ maxX = container.scrollWidth - window.innerWidth; }
+let heroImgStartPos = null;
+let navTargetPos = null;
 window.addEventListener('resize', ()=>{ calcMax(); heroImgStartPos=null; navTargetPos=null; });
 setTimeout(calcMax, 300);
 
@@ -1313,6 +1372,7 @@ let waveTriggered = false;
   checkPanelReveal();
   updateWaveEffect();
   updateMarquee();
+  updateScrollRight();
   requestAnimationFrame(animScroll);
 })();
 
@@ -1436,9 +1496,7 @@ circleData.forEach((c,i)=>{
 // Hero circles ready, drawn by splash sequence
 
 // COMPRESS CIRCLES TO NAV
-// HERO IMAGES → NAV ANIMATION (scroll-based)
-let heroImgStartPos = null; // captured at currentX=0
-let navTargetPos = null;
+
 
 function capturePositions() {
   const items = document.querySelectorAll('.hero-img-item');
@@ -1625,28 +1683,42 @@ function updateWaveEffect() {
   const panelX = panel.offsetLeft;
   const screenW = window.innerWidth;
 
-  // Progress: 0 when panel right edge is at screen right, 1 when panel is centered
-  const progress = Math.max(0, Math.min(1, (currentX - (panelX - screenW)) / screenW));
+  // Raw progress: 0 = panel entering from right, 1 = panel centered, 2 = panel exiting left
+  const rawProgress = (currentX - (panelX - screenW)) / screenW;
+  const progress = Math.max(0, Math.min(1, rawProgress));
 
-  // Per-letter arrival wave: each letter bounces as it arrives, then settles
+  // Mirror progress: so letters also wave when scrolling back (exiting left)
+  // leftProgress goes 0→1 as panel exits to the left (rawProgress 1→2)
+  const leftRaw = rawProgress - 1;
+  const leftProgress = Math.max(0, Math.min(1, leftRaw));
+
+  // Combined: use whichever is active
+  const effectiveProgress = leftProgress > 0 ? 1 - leftProgress : progress;
+
+  // Per-letter arrival wave: plays on both entry (right) and exit (left)
   const chars = document.querySelectorAll('.wave-char');
   const total = chars.length || 1;
   chars.forEach((ch, i) => {
-    // Spread arrivals: first letter arrives at progress=0, last at progress=0.8
     const arrival = (i / (total - 1)) * 0.8;
-    // How far past its arrival we are
-    const phase = progress - arrival;
-    // Bell-curve amplitude: peaks at arrival, decays quickly after
+    const phase = effectiveProgress - arrival;
     const amp = Math.max(0, 1 - Math.abs(phase) * 5) * 36;
     const wave = Math.sin(phase * 18) * amp;
     const rot  = Math.cos(phase * 12) * amp * 0.5;
     ch.style.transform = `translateY(${wave}px) rotate(${rot}deg)`;
   });
 
-  // Draw arrows once panel is mostly in view
-  if(progress > 0.4 && !waveTriggered) {
-    waveTriggered = true;
-    paths.forEach(p => p.classList.add('active'));
+  // Arrow animation: re-trigger every time panel comes into view
+  if(progress > 0.4) {
+    if(!waveTriggered) {
+      waveTriggered = true;
+      paths.forEach(p => { p.classList.remove('active'); void p.getBoundingClientRect(); p.classList.add('active'); });
+    }
+  } else {
+    // Reset so arrows re-animate next time
+    if(waveTriggered) {
+      waveTriggered = false;
+      paths.forEach(p => p.classList.remove('active'));
+    }
   }
 }
 
@@ -1770,7 +1842,7 @@ function openProject(idx) {
       <div class="detail-title">${p.title}</div>
       <div class="detail-type">${p.type}</div>
       <div class="detail-video"><video src="${p.video}" muted playsinline autoplay loop preload="metadata"></video></div>
-      ${p.link ? `<div class="detail-link-wrap" style="text-align:center;margin-bottom:40px;"><span style="color:var(--chalk);font-family:var(--font-body);font-size:14px;">explore the website → <a href="${p.link}" target="_blank" style="color:var(--chalk);text-decoration:none;">${p.link}</a></span></div>` : ''}
+      ${p.link ? `<div class="detail-link-wrap" style="text-align:center;margin-bottom:40px;"><span style="color:var(--chalk);font-family:var(--font-body);font-size:14px;">explore the website → <a href="${p.link}" target="_blank" class="alinea-link">${p.link}</a></span></div>` : ''}
       ${projectBodies[idx]}
       <div class="detail-nav">
         <button class="detail-nav-btn" onclick="openProject((${idx}+3)%4); projectDetail.scrollTop=0;">← Previous project</button>
@@ -1835,6 +1907,23 @@ detailEl.addEventListener('click', function(e){
 });
 fsCloseBtn.addEventListener('mouseenter', function(){ document.body.classList.add('cursor-open'); });
 fsCloseBtn.addEventListener('mouseleave', function(){ document.body.classList.remove('cursor-open'); });
+
+// ── SCROLL RIGHT INDICATOR ──
+function updateScrollRight() {
+  const scrollRight = document.getElementById('scroll-right');
+  if(!scrollRight) return;
+  const heroPanel = document.getElementById('panel-hero');
+  if(!heroPanel) return;
+  const heroWidth = heroPanel.offsetWidth;
+  // Show only while on hero panel (before we've scrolled past it)
+  const fraction = currentX / heroWidth;
+  // Fade in after splash, fade out as we leave hero
+  if(fraction < 0.85) {
+    scrollRight.classList.add('show');
+  } else {
+    scrollRight.classList.remove('show');
+  }
+}
 
 // ── CHALK LINE NAV ──
 ['cnav-0','cnav-1','cnav-2','cnav-3'].forEach((id, i) => {
