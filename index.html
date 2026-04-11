@@ -292,7 +292,7 @@ h1.hero-title {
   position: absolute;
   bottom: 32px; right: 48px;
   display: flex; align-items: center; gap: 10px;
-  opacity: 0; transition: opacity .6s 2s;
+  opacity: 1;
 }
 .hero-hint.show { opacity: 1; }
 .hint-arrow { animation: hint-bounce 2s ease-in-out infinite; }
@@ -788,7 +788,7 @@ h1.hero-title {
 }
 .detail-video {
   width: 100%; aspect-ratio: 16/9;
-  background: #1a1a1a; border-radius: 8px;
+  background: #1a1a1a; border-radius: 10px;
   margin-bottom: 60px; overflow: hidden;
 }
 .detail-video video { width:100%; height:100%; object-fit:cover; display:block; }
@@ -880,7 +880,7 @@ h1.hero-title {
 .detail-media { margin: 72px auto 96px; max-width: 88%; }
 .detail-media-full video,
 .detail-media-full img {
-  width: 100%; border-radius: 8px; display: block;
+  width: 100%; border-radius: 10px; display: block;
 }
 .detail-media-full video { aspect-ratio: 16/9; object-fit: cover; background:#111; max-height: 420px; }
 .detail-media-full img { max-height: 360px; object-fit: contain; }
@@ -889,7 +889,7 @@ h1.hero-title {
 }
 .detail-media-2col video,
 .detail-media-2col img {
-  width: 100%; border-radius: 8px; display: block;
+  width: 100%; border-radius: 10px; display: block;
   object-fit: cover; aspect-ratio: 16/9; background: #111;
 }
 .detail-media-2col img { object-fit: contain; aspect-ratio: auto; max-height: 240px; }
@@ -904,7 +904,7 @@ h1.hero-title {
 .detail-media-grid23 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .detail-media-grid23 .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
 .detail-media-grid23 img {
-  width: 100%; border-radius: 8px; display: block;
+  width: 100%; border-radius: 10px; display: block;
   object-fit: contain; background: #111;
 }
 
@@ -935,16 +935,20 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
 .detail-media-3col { display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;align-items:center; }
 .detail-media-3col img,.detail-media-3col video { width:100%;border-radius:10px;display:block;object-fit:contain;max-height:220px; }
 
-/* ── CASE STUDY MEDIA BORDER RADIUS ── */
-.detail-media-full img,
-.detail-media-full video,
-.detail-media-2col img,
-.detail-media-2col video,
-.detail-media-3col img,
-.detail-media-3col video,
-.cs-row-imgs img,
-.cs-row-imgs video,
-.detail-video video { border-radius: 10px !important; }
+/* ── CASE STUDY MEDIA BORDER RADIUS: 10px everywhere ── */
+
+/* MASTER: force 10px radius on all case study media */
+#detail-content img,
+#detail-content video,
+#project-detail .detail-video,
+#project-detail .detail-video video { border-radius: 10px !important; overflow: hidden; }
+
+.detail-tool {
+  font-family: var(--font-body); font-size: 12px;
+  color: var(--chalk-muted); letter-spacing: 0.12em;
+  text-transform: lowercase; margin-bottom: 44px;
+  opacity: 0.7;
+}
 
 </style>
 </head>
@@ -1710,6 +1714,7 @@ const projects = [
   {
     title: 'Alinea',
     color: '#FF3D1F',
+    tool: 'made with wordpress elementor',
     link: 'https://alinea.escpeuropemadrid.com/',
     type: 'Web Design',
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-alinea.mp4',
@@ -1726,7 +1731,8 @@ const projects = [
   {
     title: 'United Healthcare',
     color: '#1A3FFF',
-    type: 'UX Design for Student Clio Health Submission',
+    tool: 'made with figma make',
+    type: 'UX Design for Student Clio Health Awards Submission',
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-united-healthcare.mp4',
     sections: [
       { title: 'Project overview', text: 'Developed for a Branded Content course at ESCP Business School, this project addresses a critical health equity gap where millions of eligible children remain uninsured. Our team created a cinematic campaign for United Healthcare that was selected as one of the top finalists for submission to the Student Clio Health Awards. The initiative moves beyond awareness by providing a tangible solution to help families navigate the complex eligibility requirements of programs like CHIP.',
@@ -1743,6 +1749,7 @@ const projects = [
   {
     title: 'Innocent',
     color: '#00B06C',
+    tool: 'made with figma design',
     type: 'Interaction Design',
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-innocent.mp4',
     sections: [
@@ -1756,6 +1763,7 @@ const projects = [
   {
     title: 'La Pivoine',
     color: '#FFD000',
+    tool: 'made with figma make',
     type: 'Mobile UX',
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-la-pivoine.mov',
     sections: [
@@ -1780,6 +1788,7 @@ function openProject(idx) {
   detailContent.innerHTML = `
       <div class="detail-title">${p.title}</div>
       <div class="detail-type">${p.type}</div>
+      ${p.tool ? `<div class="detail-tool">${p.tool}</div>` : ''}
       <div class="detail-video"><video src="${p.video}" muted playsinline autoplay loop preload="metadata"></video></div>
       ${p.link ? `<div class="detail-link-wrap" style="text-align:center;margin-bottom:40px;"><span style="color:var(--chalk);font-family:var(--font-body);font-size:14px;">explore the website → <a href="${p.link}" target="_blank" style="color:var(--chalk);text-decoration:none;">${p.link}</a></span></div>` : ''}
       ${projectBodies[idx]}
