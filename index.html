@@ -294,7 +294,7 @@ h1.hero-title {
   display: flex; align-items: center; gap: 10px;
   opacity: 0; transition: opacity .6s 2s;
 }
-.hero-hint.show { opacity: .3; }
+.hero-hint.show { opacity: 1; }
 .hint-arrow { animation: hint-bounce 2s ease-in-out infinite; }
 @keyframes hint-bounce {
   0%,100% { transform: translateX(0); }
@@ -683,7 +683,7 @@ h1.hero-title {
   border-radius: 8px; display: flex; align-items: center; justify-content: center;
   color: var(--chalk-dim); font-size: 13px; margin-bottom: 56px;
 }
-.detail-section { margin-bottom: 44px; max-width: 56%; margin-left: auto; margin-right: auto; text-align: center; }
+.detail-section { margin-bottom: 44px; max-width: 72%; margin-left: auto; margin-right: auto; text-align: center; }
 .detail-section-title {
   font-family: var(--font-display); font-weight: 700; font-size: 22px;
   color: var(--chalk); margin-bottom: 14px;
@@ -792,7 +792,7 @@ h1.hero-title {
   margin-bottom: 60px; overflow: hidden;
 }
 .detail-video video { width:100%; height:100%; object-fit:cover; display:block; }
-.detail-section { margin-bottom: 44px; max-width: 56%; margin-left: auto; margin-right: auto; text-align: center; }
+.detail-section { margin-bottom: 44px; max-width: 72%; margin-left: auto; margin-right: auto; text-align: center; }
 .detail-section-title {
   font-family: var(--font-display); font-weight: 700;
   font-size: 22px; color: var(--chalk); margin-bottom: 14px;
@@ -913,7 +913,7 @@ h1.hero-title {
 #fs-overlay.show { display:flex; }
 #fs-close { position:fixed;top:28px;right:36px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(240,234,224,0.4);border-radius:50%;font-size:18px;color:var(--chalk);background:none;cursor:none;z-index:99101;transition:border-color .2s; }
 #fs-close:hover { border-color:var(--chalk); }
-#fs-content img,#fs-content video { max-width:88vw;max-height:88vh;object-fit:contain;border-radius:8px;display:block; }
+#fs-content img,#fs-content video { max-width:88vw;max-height:88vh;object-fit:contain;border-radius:10px;display:block; }
 /* ── CURSOR FULLSCREEN ── */
 body.cursor-fullscreen #cursor-dot { width:auto;height:auto;background:var(--chalk);border-radius:20px;padding:4px 12px;font-family:var(--font-body);font-size:11px;color:var(--bg);white-space:nowrap; }
 body.cursor-fullscreen #cursor-ring { opacity:0; }
@@ -923,52 +923,19 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
 .cs-row-text .detail-section-title::before,.cs-row-text .detail-section-title::after { display:none; }
 .cs-row-text .detail-text { text-align:left; }
 .cs-row-imgs { display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center; }
-.cs-row-imgs img,.cs-row-imgs video { width:100%;border-radius:8px;display:block;object-fit:contain;max-height:220px; }
+.cs-row-imgs img,.cs-row-imgs video { width:100%;border-radius:10px;display:block;object-fit:contain;max-height:220px; }
 /* ── CASE STUDY TEXT WIDTH ── */
-.detail-section { margin-bottom:44px;max-width:56%;margin-left:auto;margin-right:auto;text-align:center; }
+.detail-section { margin-bottom:44px;max-width:52%;margin-left:auto;margin-right:auto;text-align:center; }
 /* ── MEDIA SIZES ── */
 .detail-media { margin:60px auto 80px;max-width:88%; }
-.detail-media-full video { object-fit:contain;background:#111;max-height:400px;display:block;width:100%;border-radius:8px; }
-.detail-media-full img { max-height:400px;object-fit:contain;width:100%;border-radius:8px;display:block; }
+.detail-media-full video { object-fit:contain;background:#111;max-height:400px;display:block;width:100%;border-radius:10px; }
+.detail-media-full img { max-height:400px;object-fit:contain;width:100%;border-radius:10px;display:block; }
 .detail-media-2col { display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center; }
-.detail-media-2col img,.detail-media-2col video { width:100%;border-radius:8px;display:block;object-fit:contain;max-height:260px;background:#111; }
+.detail-media-2col img,.detail-media-2col video { width:100%;border-radius:10px;display:block;object-fit:contain;max-height:260px;background:#111; }
 .detail-media-3col { display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;align-items:center; }
-.detail-media-3col img,.detail-media-3col video { width:100%;border-radius:8px;display:block;object-fit:contain;max-height:220px; }
+.detail-media-3col img,.detail-media-3col video { width:100%;border-radius:10px;display:block;object-fit:contain;max-height:220px; }
 
-/* ── SCROLL RIGHT INDICATOR ── */
-#scroll-right {
-  position: fixed;
-  right: 32px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  z-index: 500;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-  pointer-events: none;
-}
-#scroll-right.show { opacity: 1; }
-#scroll-right .sr-text {
-  font-family: var(--font-body);
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(240,234,224,0.36);
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-}
-#scroll-right .sr-arrow {
-  animation: sr-bounce 2s ease-in-out infinite;
-}
-@keyframes sr-bounce {
-  0%,100% { transform: translateX(0); }
-  50%      { transform: translateX(6px); }
-}
-
-/* ── CONSISTENT BORDER RADIUS FOR CASE STUDY MEDIA ── */
+/* ── CASE STUDY MEDIA BORDER RADIUS ── */
 .detail-media-full img,
 .detail-media-full video,
 .detail-media-2col img,
@@ -976,11 +943,8 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
 .detail-media-3col img,
 .detail-media-3col video,
 .cs-row-imgs img,
-.cs-row-imgs video { border-radius: 6px !important; }
-
-/* ── ALINEA LINK HOVER ── */
-.alinea-link { color: var(--chalk); text-decoration: none; transition: color .2s, font-style .15s; }
-.alinea-link:hover { color: var(--c-red); font-style: italic; }
+.cs-row-imgs video,
+.detail-video video { border-radius: 10px !important; }
 
 </style>
 </head>
@@ -1008,16 +972,6 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
 
 
 
-
-<!-- SCROLL RIGHT INDICATOR -->
-<div id="scroll-right">
-  <span class="sr-text">Scroll</span>
-  <span class="sr-arrow">
-    <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
-      <path d="M8 2v20M2 14l6 6 6-6" stroke="rgba(240,234,224,0.36)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </span>
-</div>
 
 <div id="scroll-container">
 <div class="panel" id="panel-hero">
@@ -1064,9 +1018,9 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
       </div>
     </div>
     <div class="hero-hint" id="hero-hint">
-      <span style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(240,234,224,0.3)">scroll</span>
+      <span style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(240,234,224,0.36)">scroll</span>
       <span class="hint-arrow">
-        <svg width="24" height="16" viewBox="0 0 24 16" fill="none"><path d="M2 8h20M14 2l6 6-6 6" stroke="rgba(240,234,224,0.3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="24" height="16" viewBox="0 0 24 16" fill="none"><path d="M2 8h20M14 2l6 6-6 6" stroke="rgba(240,234,224,0.36)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
     </div>
   </div>
@@ -1223,7 +1177,7 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
       <div class="about-illus-col">
         <div class="illus-frame" id="illus-frame">
           <div id="il-hint" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .4s;">
-            <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/point-interrogation.png" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">
+            <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/point-interrogation.png" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:10px;">
           </div>
           <img id="il0" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-1.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
           <img id="il1" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-2.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
@@ -1332,8 +1286,6 @@ document.querySelectorAll('.work-card').forEach(card=>{
 const container = document.getElementById('scroll-container');
 let targetX=0, currentX=0, maxX=0;
 function calcMax(){ maxX = container.scrollWidth - window.innerWidth; }
-let heroImgStartPos = null;
-let navTargetPos = null;
 window.addEventListener('resize', ()=>{ calcMax(); heroImgStartPos=null; navTargetPos=null; });
 setTimeout(calcMax, 300);
 
@@ -1372,7 +1324,6 @@ let waveTriggered = false;
   checkPanelReveal();
   updateWaveEffect();
   updateMarquee();
-  updateScrollRight();
   requestAnimationFrame(animScroll);
 })();
 
@@ -1496,7 +1447,9 @@ circleData.forEach((c,i)=>{
 // Hero circles ready, drawn by splash sequence
 
 // COMPRESS CIRCLES TO NAV
-
+// HERO IMAGES → NAV ANIMATION (scroll-based)
+let heroImgStartPos = null; // captured at currentX=0
+let navTargetPos = null;
 
 function capturePositions() {
   const items = document.querySelectorAll('.hero-img-item');
@@ -1552,7 +1505,7 @@ function animHeroToNav() {
 }
 
 // TYPEWRITER CYCLING WORD
-const words=['curiosity','people','craft','intention','care','clarity','play'];
+const words=['curiosity','people','craft','intention','care','clarity','play','impact'];
 let wIdx=0;
 const cycleEl=document.getElementById('cycling-word');
 
@@ -1683,42 +1636,28 @@ function updateWaveEffect() {
   const panelX = panel.offsetLeft;
   const screenW = window.innerWidth;
 
-  // Raw progress: 0 = panel entering from right, 1 = panel centered, 2 = panel exiting left
-  const rawProgress = (currentX - (panelX - screenW)) / screenW;
-  const progress = Math.max(0, Math.min(1, rawProgress));
+  // Progress: 0 when panel right edge is at screen right, 1 when panel is centered
+  const progress = Math.max(0, Math.min(1, (currentX - (panelX - screenW)) / screenW));
 
-  // Mirror progress: so letters also wave when scrolling back (exiting left)
-  // leftProgress goes 0→1 as panel exits to the left (rawProgress 1→2)
-  const leftRaw = rawProgress - 1;
-  const leftProgress = Math.max(0, Math.min(1, leftRaw));
-
-  // Combined: use whichever is active
-  const effectiveProgress = leftProgress > 0 ? 1 - leftProgress : progress;
-
-  // Per-letter arrival wave: plays on both entry (right) and exit (left)
+  // Per-letter arrival wave: each letter bounces as it arrives, then settles
   const chars = document.querySelectorAll('.wave-char');
   const total = chars.length || 1;
   chars.forEach((ch, i) => {
+    // Spread arrivals: first letter arrives at progress=0, last at progress=0.8
     const arrival = (i / (total - 1)) * 0.8;
-    const phase = effectiveProgress - arrival;
+    // How far past its arrival we are
+    const phase = progress - arrival;
+    // Bell-curve amplitude: peaks at arrival, decays quickly after
     const amp = Math.max(0, 1 - Math.abs(phase) * 5) * 36;
     const wave = Math.sin(phase * 18) * amp;
     const rot  = Math.cos(phase * 12) * amp * 0.5;
     ch.style.transform = `translateY(${wave}px) rotate(${rot}deg)`;
   });
 
-  // Arrow animation: re-trigger every time panel comes into view
-  if(progress > 0.4) {
-    if(!waveTriggered) {
-      waveTriggered = true;
-      paths.forEach(p => { p.classList.remove('active'); void p.getBoundingClientRect(); p.classList.add('active'); });
-    }
-  } else {
-    // Reset so arrows re-animate next time
-    if(waveTriggered) {
-      waveTriggered = false;
-      paths.forEach(p => p.classList.remove('active'));
-    }
+  // Draw arrows once panel is mostly in view
+  if(progress > 0.4 && !waveTriggered) {
+    waveTriggered = true;
+    paths.forEach(p => p.classList.add('active'));
   }
 }
 
@@ -1761,10 +1700,10 @@ document.getElementById('cta-connect')?.addEventListener('click',()=>{ targetX=M
 
 // ── PROJECT BODIES ──
 const projectBodies = [
-  `<div class="detail-section"><div class="detail-section-title" style="--line-color:#FF3D1F">Project overview</div><p class="detail-text">As part of my Master\'s at ESCP Business School, my team developed Alinea, a copywriting agency website built from scratch. Moving away from standard corporate aesthetics, we aimed for a bold, editorial look using Elementor and vibe coding instead of templates. Our goal was to create a high-energy, interactive MVP that proves B2B services can be both creative and professional.</p></div><div class="detail-media detail-media-full"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-sticky-services.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;display:block;background:#111;"></video></div><div class="detail-section"><div class="detail-section-title" style="--line-color:#FF3D1F">Strategic navigation & UX</div><p class="detail-text">We prioritized a Desktop-First approach, specifically targeting B2B professionals (CEOs, Marketing Directors and Consultants) who vet agencies during work hours on laptops. To ensure a frictionless experience on a high-interaction site, we implemented a sticky header and scroll-to-top buttons for constant access to navigation. Each service page follows a consistent logic: we do not just list tasks, we showcase our philosophy and specific KPIs to align with client business goals.</p></div><div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-cursor-scroll.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-wireframes.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div><div class="detail-section"><div class="detail-section-title" style="--line-color:#FF3D1F">Evolution from wireframes</div><p class="detail-text">The project began with a structured content tree and Figma wireframes, though the final build evolved significantly. By building without templates, we explored new interaction and design possibilities that were not in our initial sketches, such as a personalized cursor that adapts to the editorial style. This cursor changes contextually to guide the user: it transforms to display the word \'Explore\' under the hero header to encourage discovery, and switches to \'Scroll\' in the portfolio section to clearly indicate the expected action. In addition, we focused heavily on accessibility, maintaining high color contrast and accurate alt-descriptions to ensure the bold design remained inclusive and easy to read.</p></div><div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-data.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-image-scroll.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;display:block;object-fit:contain;background:#111;"></video></div><div class="detail-section"><div class="detail-section-title" style="--line-color:#FF3D1F">Validation & future scaling</div><p class="detail-text">To ensure the site was intuitive, we conducted user testing with 10 participants using think-aloud interviews. This allowed us to identify and fix minor navigation friction points before launch. More importantly, the testing highlighted a key challenge for the future: as we scale the MVP and add more pages, we will need to be careful to maintain this clarity and ensure the navigation does not become cluttered as the site grows.</p></div>`,
-  `<div class="detail-section"><div class="detail-section-title" style="--line-color:#1A3FFF">Project overview</div><p class="detail-text">Developed for a Branded Content course at ESCP Business School, this project addresses a critical health equity gap where millions of eligible children remain uninsured. Our team created a cinematic campaign for United Healthcare that was selected as one of the top finalists for submission to the Student Clio Health Awards. The initiative moves beyond awareness by providing a tangible solution to help families navigate the complex eligibility requirements of programs like CHIP.</p></div><div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-state.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-child.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div><div class="detail-section"><div class="detail-section-title" style="--line-color:#1A3FFF">Creative strategy & narrative</div><p class="detail-text">We developed a cinematic short film that uses a visual metaphor to represent the consequences of non-enrollment. The story follows eight-year-old Benjamin, who tries to pay for his cancer treatment with a piggy bank but finds himself unheard and unnoticed in a cold, bureaucratic system. This emotional narrative highlights a hidden reality: when families are unaware they qualify for support, their children effectively disappear from the healthcare system.</p></div><div class="detail-media detail-media-3col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer1.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer2.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer3.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div><div class="detail-section"><div class="detail-section-title" style="--line-color:#1A3FFF">Eligibility tool design</div><p class="detail-text">To ensure the transition from the film to the solution was seamless, we built the eligibility tool prototype to perfectly match the existing UnitedHealthcare website design. To manage the website\'s multiple layers of information, we implemented breadcrumb navigation, allowing users to easily track their location and move back through previous pages. For enhanced accessibility, the interface includes a text-size adjustment tool and a clear language switcher at the top of the page. We prioritized clarity by using a classical form structure, including mandatory field asterisks and tooltips to explain why specific data is requested. The interface features helpful placeholders to clarify expected input, and we gave full control to the user, allowing them to navigate backward between questions or exit the form at any time.</p></div><div class="detail-media detail-media-full"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-media.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;max-height:400px;"></div><div class="detail-section"><div class="detail-section-title" style="--line-color:#1A3FFF">Functionality & user empowerment</div><p class="detail-text">The prototype is fully dynamic, with results that change instantly based on the data provided by the user. To respect user privacy, we included an option to opt out of marketing communications. Once the assessment is complete, the user is presented with structured information including FAQs and direct contact options. The final screen offers clear paths to either begin the official application immediately or retake the test.</p></div><div class="detail-media detail-media-full"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-video-consent.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;display:block;object-fit:contain;background:#111;max-height:400px;"></video></div><div class="detail-section"><div class="detail-section-title" style="--line-color:#1A3FFF">Media plan & impact</div><p class="detail-text">The campaign is set to launch on September 1st, 2026, to coincide with Childhood Cancer Awareness Month. We focused our geographic targeting on U.S. states with high uninsured rates, using high-impact OOH placements such as metro stations. This approach ensures repeated exposure in daily environments, supported by geo-targeted social media ads on TikTok and Instagram to lead families directly to our eligibility tool.</p></div>`,
-  `<div class="detail-section"><div class="detail-section-title" style="--line-color:#00B06C">Project overview</div><p class="detail-text">This experimental project focuses on "The Big Knit," an annual campaign by Innocent drinks where smoothies are sold with tiny, hand-knitted hats. For every hatted smoothie purchased, a portion of the proceeds helps the association Petits Frères des Pauvres provide fruits and vegetables to isolated elderly people. My goal was to design a vending machine interface that replicates the tactile, personalized experience of shopping.</p></div><div class="cs-row"><div class="cs-row-text"><div class="detail-section-title" style="--line-color:#00B06C">Seamless selection strategy</div><p class="detail-text">The core of the experience is a consolidated selection screen that displays both smoothie flavors and hat designs simultaneously, enabling users to visually match their choices. To minimize friction and cognitive load, I implemented a dynamic highlighting system where selecting an item adds a vibrant color contour while subtly dimming unselected options. The interface uses a conditional "Pay" button that remains inactive and grayed out until both a smoothie and a hat are selected.</p></div><div class="cs-row-imgs"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-pre-selection.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-selection.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div></div><div class="cs-row"><div class="cs-row-imgs"><div class="detail-section-title" style="--line-color:#00B06C">Order finalization & social impact</div><p class="detail-text">The final phase of the journey includes a concise order recap and integrated payment method selection to keep the transaction fast and efficient. To maintain the brand&#39;s playful tone, I replaced standard technical loading messages with thematic "knitting in progress" text during payment processing. Upon completion, a ready-to-go screen confirms the donation to Petits Frères des Pauvres, reinforcing the social purpose behind the purchase.</p></div><div class="cs-row-text"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-recap.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-video-tricotage.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;display:block;object-fit:contain;background:#111;"></video></div></div>`,
-  `<div class="detail-section"><div class="detail-section-title" style="--line-color:#FFD000">Project overview</div><p class="detail-text">La Pivoine is a flower shop project focused on modernizing the traditional customer retention experience. Physical loyalty cards are often lost or forgotten, especially for occasional purchases like flowers. To solve this, I designed a digital loyalty card integrated directly into the smartphone\'s wallet application. This transition from physical to digital ensures the card is always accessible while allowing the business to gather more consistent data.</p></div><div class="cs-row"><div class="cs-row-text"><div class="detail-section-title" style="--line-color:#FFD000">Interactive wallet design</div><p class="detail-text">The prototype, framed on an iPhone 16 interface, mimics the native wallet experience to ensure user familiarity. Upon selecting the La Pivoine card, the user sees the brand name and a clear progress indicator showing their number of visits out of nine. The design recreates the nostalgia of a paper card with ten circles representing stamps, positioned above a functional QR code. This layout provides all necessary information at a single glance, including the specific incentive of a free bouquet on the tenth visit.</p></div><div class="cs-row-imgs"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-wallet.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-card.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div></div><div class="cs-row"><div class="cs-row-imgs"><div class="detail-section-title" style="--line-color:#FFD000">Gamified information flow</div><p class="detail-text">The core interaction occurs at the point of sale: when the shop owner scans the QR code, a circle digitally transforms into a flower stamp. This visual update provides immediate gratification by mirroring the tactile feel of a physical stamp through a seamless digital interface. Once nine stamps are collected, the tenth circle changes into a gift stamp, triggering a celebratory pop-up.</p></div><div class="cs-row-text"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-stamp3.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-stamp9.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div></div><div class="detail-section"><div class="detail-section-title" style="--line-color:#FFD000">Driving conversion with navigation</div><p class="detail-text">To translate digital success into a store visit, the "free bouquet" pop-up includes a direct call-to-action button that opens a Google Maps link to the shop. By integrating navigation directly into the reward screen, I created a frictionless path for the user to claim their gift. This design completes a full circle, starting with a digital interaction in the wallet and ending with the customer standing in the shop to receive their flowers.</p></div>`
+  `<div class="detail-section"><div class="detail-section-title" style="--line-color:#FF3D1F">Project overview</div><p class="detail-text">As part of my Master\'s at ESCP Business School, my team developed Alinea, a copywriting agency website built from scratch. Moving away from standard corporate aesthetics, we aimed for a bold, editorial look using Elementor and vibe coding instead of templates. Our goal was to create a high-energy, interactive MVP that proves B2B services can be both creative and professional.</p></div><div class="detail-media detail-media-full"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-sticky-services.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:10px;display:block;background:#111;"></video></div><div class="detail-section"><div class="detail-section-title" style="--line-color:#FF3D1F">Strategic navigation & UX</div><p class="detail-text">We prioritized a Desktop-First approach, specifically targeting B2B professionals (CEOs, Marketing Directors and Consultants) who vet agencies during work hours on laptops. To ensure a frictionless experience on a high-interaction site, we implemented a sticky header and scroll-to-top buttons for constant access to navigation. Each service page follows a consistent logic: we do not just list tasks, we showcase our philosophy and specific KPIs to align with client business goals.</p></div><div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-cursor-scroll.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-wireframes.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"></div><div class="detail-section"><div class="detail-section-title" style="--line-color:#FF3D1F">Evolution from wireframes</div><p class="detail-text">The project began with a structured content tree and Figma wireframes, though the final build evolved significantly. By building without templates, we explored new interaction and design possibilities that were not in our initial sketches, such as a personalized cursor that adapts to the editorial style. This cursor changes contextually to guide the user: it transforms to display the word \'Explore\' under the hero header to encourage discovery, and switches to \'Scroll\' in the portfolio section to clearly indicate the expected action. In addition, we focused heavily on accessibility, maintaining high color contrast and accurate alt-descriptions to ensure the bold design remained inclusive and easy to read.</p></div><div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-data.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-image-scroll.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:10px;display:block;object-fit:contain;background:#111;"></video></div><div class="detail-section"><div class="detail-section-title" style="--line-color:#FF3D1F">Validation & future scaling</div><p class="detail-text">To ensure the site was intuitive, we conducted user testing with 10 participants using think-aloud interviews. This allowed us to identify and fix minor navigation friction points before launch. More importantly, the testing highlighted a key challenge for the future: as we scale the MVP and add more pages, we will need to be careful to maintain this clarity and ensure the navigation does not become cluttered as the site grows.</p></div>`,
+  `<div class="detail-section"><div class="detail-section-title" style="--line-color:#1A3FFF">Project overview</div><p class="detail-text">Developed for a Branded Content course at ESCP Business School, this project addresses a critical health equity gap where millions of eligible children remain uninsured. Our team created a cinematic campaign for United Healthcare that was selected as one of the top finalists for submission to the Student Clio Health Awards. The initiative moves beyond awareness by providing a tangible solution to help families navigate the complex eligibility requirements of programs like CHIP.</p></div><div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-state.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-child.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"></div><div class="detail-section"><div class="detail-section-title" style="--line-color:#1A3FFF">Creative strategy & narrative</div><p class="detail-text">We developed a cinematic short film that uses a visual metaphor to represent the consequences of non-enrollment. The story follows eight-year-old Benjamin, who tries to pay for his cancer treatment with a piggy bank but finds himself unheard and unnoticed in a cold, bureaucratic system. This emotional narrative highlights a hidden reality: when families are unaware they qualify for support, their children effectively disappear from the healthcare system.</p></div><div class="detail-media detail-media-3col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer1.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer2.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer3.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"></div><div class="detail-section"><div class="detail-section-title" style="--line-color:#1A3FFF">Eligibility tool design</div><p class="detail-text">To ensure the transition from the film to the solution was seamless, we built the eligibility tool prototype to perfectly match the existing UnitedHealthcare website design. To manage the website\'s multiple layers of information, we implemented breadcrumb navigation, allowing users to easily track their location and move back through previous pages. For enhanced accessibility, the interface includes a text-size adjustment tool and a clear language switcher at the top of the page. We prioritized clarity by using a classical form structure, including mandatory field asterisks and tooltips to explain why specific data is requested. The interface features helpful placeholders to clarify expected input, and we gave full control to the user, allowing them to navigate backward between questions or exit the form at any time.</p></div><div class="detail-media detail-media-full"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-media.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;max-height:400px;"></div><div class="detail-section"><div class="detail-section-title" style="--line-color:#1A3FFF">Functionality & user empowerment</div><p class="detail-text">The prototype is fully dynamic, with results that change instantly based on the data provided by the user. To respect user privacy, we included an option to opt out of marketing communications. Once the assessment is complete, the user is presented with structured information including FAQs and direct contact options. The final screen offers clear paths to either begin the official application immediately or retake the test.</p></div><div class="detail-media detail-media-full"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-video-consent.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:10px;display:block;object-fit:contain;background:#111;max-height:400px;"></video></div><div class="detail-section"><div class="detail-section-title" style="--line-color:#1A3FFF">Media plan & impact</div><p class="detail-text">The campaign is set to launch on September 1st, 2026, to coincide with Childhood Cancer Awareness Month. We focused our geographic targeting on U.S. states with high uninsured rates, using high-impact OOH placements such as metro stations. This approach ensures repeated exposure in daily environments, supported by geo-targeted social media ads on TikTok and Instagram to lead families directly to our eligibility tool.</p></div>`,
+  `<div class="detail-section"><div class="detail-section-title" style="--line-color:#00B06C">Project overview</div><p class="detail-text">This experimental project focuses on "The Big Knit," an annual campaign by Innocent drinks where smoothies are sold with tiny, hand-knitted hats. For every hatted smoothie purchased, a portion of the proceeds helps the association Petits Frères des Pauvres provide fruits and vegetables to isolated elderly people. My goal was to design a vending machine interface that replicates the tactile, personalized experience of shopping.</p></div><div class="cs-row"><div class="cs-row-text"><div class="detail-section-title" style="--line-color:#00B06C">Seamless selection strategy</div><p class="detail-text">The core of the experience is a consolidated selection screen that displays both smoothie flavors and hat designs simultaneously, enabling users to visually match their choices. To minimize friction and cognitive load, I implemented a dynamic highlighting system where selecting an item adds a vibrant color contour while subtly dimming unselected options. The interface uses a conditional "Pay" button that remains inactive and grayed out until both a smoothie and a hat are selected.</p></div><div class="cs-row-imgs"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-pre-selection.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-selection.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"></div></div><div class="cs-row"><div class="cs-row-imgs"><div class="detail-section-title" style="--line-color:#00B06C">Order finalization & social impact</div><p class="detail-text">The final phase of the journey includes a concise order recap and integrated payment method selection to keep the transaction fast and efficient. To maintain the brand&#39;s playful tone, I replaced standard technical loading messages with thematic "knitting in progress" text during payment processing. Upon completion, a ready-to-go screen confirms the donation to Petits Frères des Pauvres, reinforcing the social purpose behind the purchase.</p></div><div class="cs-row-text"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-recap.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-video-tricotage.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:10px;display:block;object-fit:contain;background:#111;"></video></div></div>`,
+  `<div class="detail-section"><div class="detail-section-title" style="--line-color:#FFD000">Project overview</div><p class="detail-text">La Pivoine is a flower shop project focused on modernizing the traditional customer retention experience. Physical loyalty cards are often lost or forgotten, especially for occasional purchases like flowers. To solve this, I designed a digital loyalty card integrated directly into the smartphone\'s wallet application. This transition from physical to digital ensures the card is always accessible while allowing the business to gather more consistent data.</p></div><div class="cs-row"><div class="cs-row-text"><div class="detail-section-title" style="--line-color:#FFD000">Interactive wallet design</div><p class="detail-text">The prototype, framed on an iPhone 16 interface, mimics the native wallet experience to ensure user familiarity. Upon selecting the La Pivoine card, the user sees the brand name and a clear progress indicator showing their number of visits out of nine. The design recreates the nostalgia of a paper card with ten circles representing stamps, positioned above a functional QR code. This layout provides all necessary information at a single glance, including the specific incentive of a free bouquet on the tenth visit.</p></div><div class="cs-row-imgs"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-wallet.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-card.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"></div></div><div class="cs-row"><div class="cs-row-imgs"><div class="detail-section-title" style="--line-color:#FFD000">Gamified information flow</div><p class="detail-text">The core interaction occurs at the point of sale: when the shop owner scans the QR code, a circle digitally transforms into a flower stamp. This visual update provides immediate gratification by mirroring the tactile feel of a physical stamp through a seamless digital interface. Once nine stamps are collected, the tenth circle changes into a gift stamp, triggering a celebratory pop-up.</p></div><div class="cs-row-text"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-stamp3.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-stamp9.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"></div></div><div class="detail-section"><div class="detail-section-title" style="--line-color:#FFD000">Driving conversion with navigation</div><p class="detail-text">To translate digital success into a store visit, the "free bouquet" pop-up includes a direct call-to-action button that opens a Google Maps link to the shop. By integrating navigation directly into the reward screen, I created a frictionless path for the user to claim their gift. This design completes a full circle, starting with a digital interaction in the wallet and ending with the customer standing in the shop to receive their flowers.</p></div>`
 ];
 
 const projects = [
@@ -1776,11 +1715,11 @@ const projects = [
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-alinea.mp4',
     sections: [
       { title: 'Project overview', text: 'As part of my Master\'s at ESCP Business School, my team developed Alinea, a copywriting agency website built from scratch. Moving away from standard corporate aesthetics, we aimed for a bold, editorial look using Elementor and vibe coding instead of templates. Our goal was to create a high-energy, interactive MVP that proves B2B services can be both creative and professional.',
-      media: '<div class="detail-media detail-media-full"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-sticky-services.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
+      media: '<div class="detail-media detail-media-full"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-sticky-services.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:10px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
       { title: 'Strategic navigation & UX', text: 'We prioritized a Desktop-First approach, specifically targeting B2B professionals (CEOs, Marketing Directors and Consultants) who vet agencies during work hours on laptops. To ensure a frictionless experience on a high-interaction site, we implemented a sticky header and scroll-to-top buttons for constant access to navigation. Each service page follows a consistent logic: we do not just list tasks, we showcase our philosophy and specific KPIs to align with client business goals.',
-      media: '<div class="detail-media detail-media-2col"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-portfolio.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-wireframes.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
+      media: '<div class="detail-media detail-media-2col"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-portfolio.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:10px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-wireframes.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"></div>' },
       { title: 'Evolution from wireframes', text: 'The project began with a structured content tree and Figma wireframes, though the final build evolved significantly. By building without templates, we explored new interaction and design possibilities that were not in our initial sketches, such as a personalized cursor that adapts to the editorial style. This cursor changes contextually to guide the user: it transforms to display the word \'Explore\' under the hero header to encourage discovery, and switches to \'Scroll\' in the portfolio section to clearly indicate the expected action. In addition, we focused heavily on accessibility, maintaining high color contrast and accurate alt-descriptions to ensure the bold design remained inclusive and easy to read.',
-      media: '<div class="detail-media detail-media-2col"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-image-scroll.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-data.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
+      media: '<div class="detail-media detail-media-2col"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-image-scroll.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:10px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-data.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:10px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
       { title: 'Validation & future scaling', text: 'To ensure the site was intuitive, we conducted user testing with 10 participants using think-aloud interviews. This allowed us to identify and fix minor navigation friction points before launch. More importantly, the testing highlighted a key challenge for the future: as we scale the MVP and add more pages, we will need to be careful to maintain this clarity and ensure the navigation does not become cluttered as the site grows.' }
     ]
   },
@@ -1791,13 +1730,13 @@ const projects = [
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-united-healthcare.mp4',
     sections: [
       { title: 'Project overview', text: 'Developed for a Branded Content course at ESCP Business School, this project addresses a critical health equity gap where millions of eligible children remain uninsured. Our team created a cinematic campaign for United Healthcare that was selected as one of the top finalists for submission to the Student Clio Health Awards. The initiative moves beyond awareness by providing a tangible solution to help families navigate the complex eligibility requirements of programs like CHIP.',
-      media: '<div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-state.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-child.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
+      media: '<div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-state.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-child.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"></div>' },
       { title: 'Creative strategy & narrative', text: 'We developed a cinematic short film that uses a visual metaphor to represent the consequences of non-enrollment. The story follows eight-year-old Benjamin, who tries to pay for his cancer treatment with a piggy bank but finds himself unheard and unnoticed in a cold, bureaucratic system. This emotional narrative highlights a hidden reality: when families are unaware they qualify for support, their children effectively disappear from the healthcare system.',
-      media: '<div class="detail-media"><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer1.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer2.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer3.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
+      media: '<div class="detail-media"><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer1.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer2.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"></div><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer3.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"></div>' },
       { title: 'Eligibility tool design', text: 'To ensure the transition from the film to the solution was seamless, we built the eligibility tool prototype to perfectly match the existing UnitedHealthcare website design. To manage the website\'s multiple layers of information, we implemented breadcrumb navigation, allowing users to easily track their location and move back through previous pages. For enhanced accessibility, the interface includes a text-size adjustment tool and a clear language switcher at the top of the page. We prioritized clarity by using a classical form structure, including mandatory field asterisks and tooltips to explain why specific data is requested. The interface features helpful placeholders to clarify expected input, and we gave full control to the user, allowing them to navigate backward between questions or exit the form at any time.',
-      media: '<div class="detail-media detail-media-full"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-media.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;max-height:360px;"></div>' },
+      media: '<div class="detail-media detail-media-full"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-media.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;max-height:360px;"></div>' },
       { title: 'Functionality & user empowerment', text: 'The prototype is fully dynamic, with results that change instantly based on the data provided by the user. To respect user privacy, we included an option to opt out of marketing communications. Once the assessment is complete, the user is presented with structured information including FAQs and direct contact options. The final screen offers clear paths to either begin the official application immediately or retake the test.',
-      media: '<div class="detail-media detail-media-full"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-video-consent.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
+      media: '<div class="detail-media detail-media-full"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-video-consent.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:10px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
       { title: 'Media plan & impact', text: 'The campaign is set to launch on September 1st, 2026, to coincide with Childhood Cancer Awareness Month. We focused our geographic targeting on U.S. states with high uninsured rates, using high-impact OOH placements such as metro stations. This approach ensures repeated exposure in daily environments, supported by geo-targeted social media ads on TikTok and Instagram to lead families directly to our eligibility tool.' }
     ]
   },
@@ -1808,9 +1747,9 @@ const projects = [
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-innocent.mp4',
     sections: [
       { title: 'Project overview', text: 'This experimental project focuses on "The Big Knit," an annual campaign by Innocent drinks where smoothies are sold with tiny, hand-knitted hats. For every hatted smoothie purchased, a portion of the proceeds helps the association Petits Frères des Pauvres provide fruits and vegetables to isolated elderly people. My goal was to design a vending machine interface that replicates the tactile, personalized experience of shopping.',
-      media: '<div class="detail-media detail-media-2col detail-media-innocent"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-pre-selection.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-selection.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
+      media: '<div class="detail-media detail-media-2col detail-media-innocent"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-pre-selection.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-selection.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"></div>' },
       { title: 'Seamless selection strategy', text: 'The core of the experience is a consolidated selection screen that displays both smoothie flavors and hat designs simultaneously, enabling users to visually match their choices. To minimize friction and cognitive load, I implemented a dynamic highlighting system where selecting an item adds a vibrant color contour while subtly dimming unselected options. The interface uses a conditional "Pay" button that remains inactive and grayed out until both a smoothie and a hat are selected.',
-      media: '<div class="detail-media detail-media-2col detail-media-innocent"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-recap.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-video-tricotage.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
+      media: '<div class="detail-media detail-media-2col detail-media-innocent"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-recap.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-video-tricotage.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:10px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
       { title: 'Order finalization & social impact', text: 'The final phase of the journey includes a concise order recap and integrated payment method selection to keep the transaction fast and efficient. To maintain the brand&#39;s playful tone, I replaced standard technical loading messages with thematic "knitting in progress" text during payment processing. Upon completion, a ready-to-go screen confirms the donation to Petits Frères des Pauvres, reinforcing the social purpose behind the purchase.' }
     ]
   },
@@ -1821,11 +1760,11 @@ const projects = [
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-la-pivoine.mov',
     sections: [
       { title: 'Project overview', text: 'La Pivoine is a flower shop project focused on modernizing the traditional customer retention experience. Physical loyalty cards are often lost or forgotten, especially for occasional purchases like flowers. To solve this, I designed a digital loyalty card integrated directly into the smartphone\'s wallet application. This transition from physical to digital ensures the card is always accessible while allowing the business to gather more consistent data.',
-      media: '<div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-wallet.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-card.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
+      media: '<div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-wallet.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-card.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"></div>' },
       { title: 'Interactive wallet design', text: 'The prototype, framed on an iPhone 16 interface, mimics the native wallet experience to ensure user familiarity. Upon selecting the La Pivoine card, the user sees the brand name and a clear progress indicator showing their number of visits out of nine. The design recreates the nostalgia of a paper card with ten circles representing stamps, positioned above a functional QR code. This layout provides all necessary information at a single glance, including the specific incentive of a free bouquet on the tenth visit.',
-      media: '<div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-stamp3.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-stamp9.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
+      media: '<div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-stamp3.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-stamp9.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"></div>' },
       { title: 'Gamified information flow', text: 'The core interaction occurs at the point of sale: when the shop owner scans the QR code, a circle digitally transforms into a flower stamp. This visual update provides immediate gratification by mirroring the tactile feel of a physical stamp through a seamless digital interface. Once nine stamps are collected, the tenth circle changes into a gift stamp, triggering a celebratory pop-up.',
-      media: '<div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-gift.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-popup.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
+      media: '<div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-gift.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-popup.png" style="width:100%;border-radius:10px;display:block;object-fit:contain;"></div>' },
       { title: 'Driving conversion with navigation', text: 'To translate digital success into a store visit, the "free bouquet" pop-up includes a direct call-to-action button that opens a Google Maps link to the shop. By integrating navigation directly into the reward screen, I created a frictionless path for the user to claim their gift. This design completes a full circle, starting with a digital interaction in the wallet and ending with the customer standing in the shop to receive their flowers.' }
     ]
   }
@@ -1842,7 +1781,7 @@ function openProject(idx) {
       <div class="detail-title">${p.title}</div>
       <div class="detail-type">${p.type}</div>
       <div class="detail-video"><video src="${p.video}" muted playsinline autoplay loop preload="metadata"></video></div>
-      ${p.link ? `<div class="detail-link-wrap" style="text-align:center;margin-bottom:40px;"><span style="color:var(--chalk);font-family:var(--font-body);font-size:14px;">explore the website → <a href="${p.link}" target="_blank" class="alinea-link">${p.link}</a></span></div>` : ''}
+      ${p.link ? `<div class="detail-link-wrap" style="text-align:center;margin-bottom:40px;"><span style="color:var(--chalk);font-family:var(--font-body);font-size:14px;">explore the website → <a href="${p.link}" target="_blank" style="color:var(--chalk);text-decoration:none;">${p.link}</a></span></div>` : ''}
       ${projectBodies[idx]}
       <div class="detail-nav">
         <button class="detail-nav-btn" onclick="openProject((${idx}+3)%4); projectDetail.scrollTop=0;">← Previous project</button>
@@ -1907,23 +1846,6 @@ detailEl.addEventListener('click', function(e){
 });
 fsCloseBtn.addEventListener('mouseenter', function(){ document.body.classList.add('cursor-open'); });
 fsCloseBtn.addEventListener('mouseleave', function(){ document.body.classList.remove('cursor-open'); });
-
-// ── SCROLL RIGHT INDICATOR ──
-function updateScrollRight() {
-  const scrollRight = document.getElementById('scroll-right');
-  if(!scrollRight) return;
-  const heroPanel = document.getElementById('panel-hero');
-  if(!heroPanel) return;
-  const heroWidth = heroPanel.offsetWidth;
-  // Show only while on hero panel (before we've scrolled past it)
-  const fraction = currentX / heroWidth;
-  // Fade in after splash, fade out as we leave hero
-  if(fraction < 0.85) {
-    scrollRight.classList.add('show');
-  } else {
-    scrollRight.classList.remove('show');
-  }
-}
 
 // ── CHALK LINE NAV ──
 ['cnav-0','cnav-1','cnav-2','cnav-3'].forEach((id, i) => {
