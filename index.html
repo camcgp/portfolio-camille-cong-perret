@@ -560,7 +560,7 @@ h1.hero-title {
 }
 .card-img-placeholder {
   width: 100%; aspect-ratio: 16/9;
-  background: #242424;
+  background: #111111;
   border-radius: 8px 8px 0 0;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
@@ -1078,7 +1078,7 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
          style="top:26vh;left:12vw;transform:rotate(-4deg);z-index:3;">
       <div class="card-pin" style="background:var(--c-red);"></div>
             <div class="card-img-placeholder">
-        <video class="card-video" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-alinea.mp4" muted playsinline preload="metadata" loop></video>
+        <video class="card-video" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-alinea.mp4" muted playsinline preload="auto" loop></video>
       </div>
       <div class="card-body">
         <div class="card-title">Alinea</div>
@@ -1092,7 +1092,7 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
          style="top:46vh;left:30vw;transform:rotate(2.5deg);z-index:2;">
       <div class="card-pin" style="background:var(--c-blue);"></div>
             <div class="card-img-placeholder">
-        <video class="card-video" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-united-healthcare.mp4" muted playsinline preload="metadata" loop></video>
+        <video class="card-video" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-united-healthcare.mp4" muted playsinline preload="auto" loop></video>
       </div>
       <div class="card-body">
         <div class="card-title">United Healthcare</div>
@@ -1106,7 +1106,7 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
          style="top:26vh;left:48vw;transform:rotate(1deg);z-index:4;">
       <div class="card-pin" style="background:var(--c-green);"></div>
             <div class="card-img-placeholder">
-        <video class="card-video" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-innocent.mp4" muted playsinline preload="metadata" loop></video>
+        <video class="card-video" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-innocent.mp4" muted playsinline preload="auto" loop></video>
       </div>
       <div class="card-body">
         <div class="card-title">Innocent</div>
@@ -1120,7 +1120,7 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
          style="top:46vh;left:66vw;transform:rotate(-3deg);z-index:3;">
       <div class="card-pin" style="background:var(--c-yellow);"></div>
             <div class="card-img-placeholder">
-        <video class="card-video" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-la-pivoine.mov" muted playsinline preload="metadata" loop></video>
+        <video class="card-video" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-la-pivoine.mov" muted playsinline preload="auto" loop></video>
       </div>
       <div class="card-body">
         <div class="card-title">La Pivoine</div>
@@ -1255,6 +1255,7 @@ document.querySelectorAll('a,button,.work-card,.nav-circle,.cta-connect,.detail-
 });
 document.querySelectorAll('.work-card').forEach(card=>{
   const vid = card.querySelector('.card-video');
+  if(vid) { vid.load(); vid.addEventListener('loadeddata', ()=>{ vid.currentTime=0; }, {once:true}); }
   const projIdx = parseInt(card.dataset.project);
   if(vid) vid.playbackRate = projIdx === 1 ? 2 : 1.5;
   card.addEventListener('mouseenter',()=>{
