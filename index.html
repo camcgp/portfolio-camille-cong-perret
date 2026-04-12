@@ -926,7 +926,7 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
 .cs-row-imgs { display:grid;grid-template-columns:1fr 1fr;gap:6px;align-items:center; }
 .cs-row-imgs img,.cs-row-imgs video { width:100%;display:block;object-fit:contain; }
 /* ── CASE STUDY TEXT WIDTH ── */
-.detail-section { margin-bottom:88px;max-width:52%;margin-left:auto;margin-right:auto;text-align:center; }
+.detail-section { margin-bottom:88px;max-width:58%;margin-left:auto;margin-right:auto;text-align:center; }
 /* ── MEDIA SIZES ── */
 .detail-media { margin:120px auto 120px;max-width:94%; }
 .detail-media-full video { object-fit:contain;background:#111;max-height:400px;display:block;width:100%;border-radius:10px; }
@@ -954,6 +954,20 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
   text-transform: lowercase; margin-bottom: 48px;
 }
 
+
+.card-cover {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+.work-card:hover .card-cover { opacity: 0; }
+.card-cover-icon {
+  font-family: var(--font-body); font-size: 48px; font-weight: 700;
+  color: rgba(240,234,224,0.08); letter-spacing: .05em;
+}
+
+.detail-link:hover { color: var(--c-red) !important; font-style: italic; }
 </style>
 </head>
 <body>
@@ -1209,7 +1223,7 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
       <span style="font-size:13px;color:rgba(240,234,224,0.36);font-style:italic;font-family:var(--font-body)">get in touch</span>
     </div>
     <div class="contact-email-wrap panel-reveal" style="transition-delay:.1s">
-      <a href="/cdn-cgi/l/email-protection#2b484a464247474e4844454c0548484c6b4c464a424705484446" class="contact-email"><span class="__cf_email__" data-cfemail="91d2d0dcd8ddddd4d2dedfd6bfd2d2d6d1d6dcd0d8ddbfd2dedc">[email&#160;protected]</span></a>
+      <a href="mailto:camillecong.ccg@gmail.com" class="contact-email">CAMILLECONG.CCG@GMAIL.COM</a>
       <div class="email-underline"></div>
     </div>
     <div class="contact-links panel-reveal" style="transition-delay:.2s;display:flex;flex-direction:column;gap:12px;align-items:flex-start;">
@@ -1258,7 +1272,7 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
   <div id="detail-content"></div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // PROJECT DATA
 // projects defined below
 
