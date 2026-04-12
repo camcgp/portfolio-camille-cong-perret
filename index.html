@@ -560,7 +560,7 @@ h1.hero-title {
 }
 .card-img-placeholder {
   width: 100%; aspect-ratio: 16/9;
-  background: #111111;
+  background: transparent;
   border-radius: 8px 8px 0 0;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
@@ -1241,6 +1241,13 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
 </div>
 
 <script>
+// Suppress cross-origin and media errors (Cloudflare, .mov codec errors, etc.)
+window.addEventListener('error', function(e) {
+  if (!e.filename || e.filename === window.location.href) return; // only suppress cross-origin
+  e.preventDefault();
+}, true);
+window.addEventListener('unhandledrejection', function(e) { e.preventDefault(); });
+
 // PROJECT DATA
 // projects defined below
 
@@ -1256,15 +1263,26 @@ document.querySelectorAll('a,button,.work-card,.nav-circle,.cta-connect,.detail-
 });
 document.querySelectorAll('.work-card').forEach(card=>{
   const vid = card.querySelector('.card-video');
-  if(vid) { vid.load(); vid.addEventListener('loadeddata', ()=>{ vid.currentTime=0; }, {once:true}); }
   const projIdx = parseInt(card.dataset.project);
-  if(vid) vid.playbackRate = projIdx === 1 ? 2 : 1.5;
+  if(vid) {
+    vid.playbackRate = projIdx === 1 ? 2 : 1.5;
+    // Seek to frame 0 silently after metadata loads — no reload needed
+    vid.addEventListener('loadedmetadata', ()=>{ vid.currentTime=0; }, {once:true});
+  }
   card.addEventListener('mouseenter',()=>{
     document.body.classList.add('cursor-pill'); dot.textContent='open';
-    if(vid){ vid.playbackRate = projIdx === 1 ? 2 : 1.5; vid.load(); vid.play().catch(()=>{}); }
+    if(vid){
+      vid.playbackRate = projIdx === 1 ? 2 : 1.5;
+      vid.play().catch(()=>{});
+    }
   });
   card.addEventListener('mouseleave',()=>{
-    if(vid){ vid.pause(); vid.currentTime=0; }
+    if(vid){
+      vid.pause();
+      // Seek back to frame 0 only after the seek won't cause a visual flash
+      // Use requestAnimationFrame to let the pause settle first
+      requestAnimationFrame(()=>{ vid.currentTime = 0; });
+    }
     document.body.classList.remove('cursor-pill'); dot.textContent='';
   });
   card.addEventListener('click',()=>{
@@ -1641,9 +1659,9 @@ if(waveTarget) {
   ).join('');
 }
 
-// WAVE effect — text is fixed on its 100vw panel.
-// Letters tumble as the panel scrolls into view, then settle.
-function updateWaveEffect() {
+// WAVE effect
+let _wavePrevX = 0;
+function updateWaveEffect() { try {
   const panel = document.getElementById('panel-wave');
   const holder = document.getElementById('marquee-holder');
   const paths = document.querySelectorAll('.draw-path');
@@ -1651,46 +1669,53 @@ function updateWaveEffect() {
 
   const panelX = panel.offsetLeft;
   const screenW = window.innerWidth;
+  const scrollingForward = currentX >= _wavePrevX;
+  _wavePrevX = currentX;
 
-  // progress: entering from right (0→1 as panel scrolls in from right)
+  // progressEnter: 0→1 as panel enters from right
   const progressEnter = Math.max(0, Math.min(1, (currentX - (panelX - screenW)) / screenW));
-
-  // progressLeave: leaving to the left (0 when centered, 1 when panel has left screen left)
-  // panel leaves left when currentX > panelX + panelWidth - screenW
-  const panelW = panel.offsetWidth;
+  // progressLeave: 0→1 as panel leaves to left
   const progressLeave = Math.max(0, Math.min(1, (currentX - panelX) / screenW));
 
   const chars = document.querySelectorAll('.wave-char');
   const total = chars.length || 1;
   chars.forEach((ch, i) => {
     const t = i / (total - 1);
+    let wave = 0, rot = 0;
 
-    // ENTER from right: first letter arrives at progress=0, last at progress=0.8
+    // ENTER from right (scrolling forward, panel coming in): first letter leads
     const arrivalEnter = t * 0.8;
     const phaseEnter = progressEnter - arrivalEnter;
     const ampEnter = Math.max(0, 1 - Math.abs(phaseEnter) * 5) * 36;
-    const waveEnter = Math.sin(phaseEnter * 18) * ampEnter;
-    const rotEnter  = Math.cos(phaseEnter * 12) * ampEnter * 0.5;
+    wave += Math.sin(phaseEnter * 18) * ampEnter;
+    rot  += Math.cos(phaseEnter * 12) * ampEnter * 0.5;
 
-    // LEAVE to left: last letter leaves first (reverse order)
-    const arrivalLeave = (1 - t) * 0.8;
-    const phaseLeave = progressLeave - arrivalLeave;
-    const ampLeave = Math.max(0, 1 - Math.abs(phaseLeave) * 5) * 36;
-    const waveLeave = Math.sin(phaseLeave * 18) * ampLeave;
-    const rotLeave  = Math.cos(phaseLeave * 12) * ampLeave * 0.5;
+    if(scrollingForward) {
+      // LEAVE to left (scrolling forward past center): last letter exits first
+      // spatial: letter at position t exits screen when progressLeave ≈ 1-t
+      const arrivalLeaveF = (1 - t);
+      const phaseLeaveF = progressLeave - arrivalLeaveF;
+      const ampLeaveF = Math.max(0, 1 - Math.abs(phaseLeaveF) * 5) * 36;
+      wave += Math.sin(phaseLeaveF * 18) * ampLeaveF;
+      rot  += Math.cos(phaseLeaveF * 12) * ampLeaveF * 0.5;
+    } else {
+      // RE-ENTER from left (scrolling back): letter at position t re-enters when progressLeave ≈ t
+      // rightmost letters (t=1) re-appear first
+      const arrivalReenter = t;
+      const phaseReenter = progressLeave - arrivalReenter;
+      const ampReenter = Math.max(0, 1 - Math.abs(phaseReenter) * 5) * 36;
+      wave += Math.sin(phaseReenter * 18) * ampReenter;
+      rot  += Math.cos(phaseReenter * 12) * ampReenter * 0.5;
+    }
 
-    // Combine both effects
-    const wave = waveEnter + waveLeave;
-    const rot  = rotEnter + rotLeave;
     ch.style.transform = `translateY(${wave}px) rotate(${rot}deg)`;
   });
 
-  // Draw arrows once panel is mostly in view
   if(progressEnter > 0.4 && !waveTriggered) {
     waveTriggered = true;
     paths.forEach(p => p.classList.add('active'));
   }
-}
+} catch(e){} }
 
 // CHALK LINES check (now handled by updateWaveEffect)
 
