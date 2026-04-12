@@ -1652,26 +1652,41 @@ function updateWaveEffect() {
   const panelX = panel.offsetLeft;
   const screenW = window.innerWidth;
 
-  // Progress: 0 when panel right edge is at screen right, 1 when panel is centered
-  const progress = Math.max(0, Math.min(1, (currentX - (panelX - screenW)) / screenW));
+  // progress: entering from right (0→1 as panel scrolls in from right)
+  const progressEnter = Math.max(0, Math.min(1, (currentX - (panelX - screenW)) / screenW));
 
-  // Per-letter arrival wave: each letter bounces as it arrives, then settles
+  // progressLeave: leaving to the left (0 when centered, 1 when panel has left screen left)
+  // panel leaves left when currentX > panelX + panelWidth - screenW
+  const panelW = panel.offsetWidth;
+  const progressLeave = Math.max(0, Math.min(1, (currentX - panelX) / screenW));
+
   const chars = document.querySelectorAll('.wave-char');
   const total = chars.length || 1;
   chars.forEach((ch, i) => {
-    // Spread arrivals: first letter arrives at progress=0, last at progress=0.8
-    const arrival = (i / (total - 1)) * 0.8;
-    // How far past its arrival we are
-    const phase = progress - arrival;
-    // Bell-curve amplitude: peaks at arrival, decays quickly after
-    const amp = Math.max(0, 1 - Math.abs(phase) * 5) * 36;
-    const wave = Math.sin(phase * 18) * amp;
-    const rot  = Math.cos(phase * 12) * amp * 0.5;
+    const t = i / (total - 1);
+
+    // ENTER from right: first letter arrives at progress=0, last at progress=0.8
+    const arrivalEnter = t * 0.8;
+    const phaseEnter = progressEnter - arrivalEnter;
+    const ampEnter = Math.max(0, 1 - Math.abs(phaseEnter) * 5) * 36;
+    const waveEnter = Math.sin(phaseEnter * 18) * ampEnter;
+    const rotEnter  = Math.cos(phaseEnter * 12) * ampEnter * 0.5;
+
+    // LEAVE to left: last letter leaves first (reverse order)
+    const arrivalLeave = (1 - t) * 0.8;
+    const phaseLeave = progressLeave - arrivalLeave;
+    const ampLeave = Math.max(0, 1 - Math.abs(phaseLeave) * 5) * 36;
+    const waveLeave = Math.sin(phaseLeave * 18) * ampLeave;
+    const rotLeave  = Math.cos(phaseLeave * 12) * ampLeave * 0.5;
+
+    // Combine both effects
+    const wave = waveEnter + waveLeave;
+    const rot  = rotEnter + rotLeave;
     ch.style.transform = `translateY(${wave}px) rotate(${rot}deg)`;
   });
 
   // Draw arrows once panel is mostly in view
-  if(progress > 0.4 && !waveTriggered) {
+  if(progressEnter > 0.4 && !waveTriggered) {
     waveTriggered = true;
     paths.forEach(p => p.classList.add('active'));
   }
