@@ -1659,58 +1659,49 @@ if(waveTarget) {
   ).join('');
 }
 
-// WAVE effect
-let _wavePrevX = 0;
+// WAVE effect — only animate at screen edges, settle instantly in middle
 function updateWaveEffect() { try {
   const panel = document.getElementById('panel-wave');
-  const holder = document.getElementById('marquee-holder');
   const paths = document.querySelectorAll('.draw-path');
-  if(!panel || !holder) return;
+  if(!panel) return;
 
   const panelX = panel.offsetLeft;
+  const panelW = panel.offsetWidth;
   const screenW = window.innerWidth;
-  const scrollingForward = currentX >= _wavePrevX;
-  _wavePrevX = currentX;
 
-  // progressEnter: 0→1 as panel enters from right
-  const progressEnter = Math.max(0, Math.min(1, (currentX - (panelX - screenW)) / screenW));
-  // progressLeave: 0→1 as panel leaves to left
-  const progressLeave = Math.max(0, Math.min(1, (currentX - panelX) / screenW));
-
+  // How far each letter is from the nearest screen edge (0=at edge, 1=off-screen, -1=in middle)
   const chars = document.querySelectorAll('.wave-char');
   const total = chars.length || 1;
+
   chars.forEach((ch, i) => {
-    const t = i / (total - 1);
-    let wave = 0, rot = 0;
+    const t = i / Math.max(total - 1, 1);
+    // Approximate pixel position of letter within the panel
+    const letterX = panelX + t * panelW;
+    // Position on screen (relative to viewport left)
+    const screenPos = letterX - currentX;
+    // Normalized: 0 = left edge, 1 = right edge
+    const screenNorm = screenPos / screenW;
 
-    // ENTER from right (scrolling forward, panel coming in): first letter leads
-    const arrivalEnter = t * 0.8;
-    const phaseEnter = progressEnter - arrivalEnter;
-    const ampEnter = Math.max(0, 1 - Math.abs(phaseEnter) * 5) * 36;
-    wave += Math.sin(phaseEnter * 18) * ampEnter;
-    rot  += Math.cos(phaseEnter * 12) * ampEnter * 0.5;
+    // "edge zone": within 15% of either screen edge
+    const edgeDist = Math.min(screenNorm, 1 - screenNorm); // 0 at edge, 0.5 at center
+    const edgeZone = Math.max(0, 1 - edgeDist / 0.15); // 1 at edge, 0 beyond 15%
 
-    if(scrollingForward) {
-      // LEAVE to left (scrolling forward past center): last letter exits first
-      // spatial: letter at position t exits screen when progressLeave ≈ 1-t
-      const arrivalLeaveF = (1 - t);
-      const phaseLeaveF = progressLeave - arrivalLeaveF;
-      const ampLeaveF = Math.max(0, 1 - Math.abs(phaseLeaveF) * 5) * 36;
-      wave += Math.sin(phaseLeaveF * 18) * ampLeaveF;
-      rot  += Math.cos(phaseLeaveF * 12) * ampLeaveF * 0.5;
-    } else {
-      // RE-ENTER from left (scrolling back): letter at position t re-enters when progressLeave ≈ t
-      // rightmost letters (t=1) re-appear first
-      const arrivalReenter = t;
-      const phaseReenter = progressLeave - arrivalReenter;
-      const ampReenter = Math.max(0, 1 - Math.abs(phaseReenter) * 5) * 36;
-      wave += Math.sin(phaseReenter * 18) * ampReenter;
-      rot  += Math.cos(phaseReenter * 12) * ampReenter * 0.5;
+    if(edgeZone < 0.01) {
+      // Letter is in the center of the screen — force to rest position
+      ch.style.transform = 'translateY(0px) rotate(0deg)';
+      return;
     }
 
+    // Wave amplitude proportional to how close to edge
+    const amp = edgeZone * 28;
+    // Phase based on screen position — letters at left edge vs right edge get opposite phase
+    const phase = (screenNorm - 0.5) * Math.PI * 3;
+    const wave = Math.sin(phase) * amp;
+    const rot  = Math.cos(phase * 0.7) * amp * 0.4;
     ch.style.transform = `translateY(${wave}px) rotate(${rot}deg)`;
   });
 
+  const progressEnter = Math.max(0, Math.min(1, (currentX - (panelX - screenW)) / screenW));
   if(progressEnter > 0.4 && !waveTriggered) {
     waveTriggered = true;
     paths.forEach(p => p.classList.add('active'));
