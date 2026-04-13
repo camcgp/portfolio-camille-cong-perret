@@ -1561,22 +1561,36 @@ function eraseWord(){
   });
 }
 
+let cycleAbort = null;
+
 async function cycleWords(){
+  // Cancel any previous loop
+  if(cycleAbort) cycleAbort.cancelled = true;
+  const token = { cancelled: false };
+  cycleAbort = token;
+
   await new Promise(r=>setTimeout(r,5000));
-  while(true){
+  while(!token.cancelled){
     await eraseWord();
+    if(token.cancelled) break;
     wIdx=(wIdx+1)%words.length;
     await new Promise(r=>setTimeout(r,80));
+    if(token.cancelled) break;
     typeWord(words[wIdx]);
     await new Promise(r=>setTimeout(r,5000));
   }
 }
 cycleWords();
+
 cycleEl.addEventListener('click',async()=>{
+  // Stop current cycle, type next word, then restart cycle with fresh 5s delay
+  if(cycleAbort) cycleAbort.cancelled = true;
   await eraseWord();
   wIdx=(wIdx+1)%words.length;
   await new Promise(r=>setTimeout(r,80));
   typeWord(words[wIdx]);
+  // Restart the auto-cycle with full 5s wait
+  cycleWords();
 });
 
 // HERO IMAGE GRID click handlers
