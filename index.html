@@ -329,29 +329,30 @@ h1.hero-title {
 #panel-about {
   width: 100vw;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: stretch;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0;
+  padding: 0 72px;
 }
 .about-left {
-  padding: 56px 44px 56px 140px;
+  padding: 40px 40px 40px 68px;
   display: flex; flex-direction: column; justify-content: center;
 }
+.about-portrait-col {
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 24px;
+}
 .about-right {
-  padding: 56px 72px 56px 0px;
-  margin-left: -32px;
-  display: flex; flex-direction: row; align-items: center; gap: 48px;
-  overflow-y: auto; scrollbar-width: none;
+  padding: 40px 40px 40px 32px;
+  display: flex; flex-direction: row; align-items: center; gap: 24px;
 }
 .about-right::-webkit-scrollbar { display: none; }
 .about-checklist-col {
   display: flex; flex-direction: column; justify-content: center; flex: 1;
 }
 .about-illus-col {
-  flex-shrink: 0; width: 220px;
+  flex-shrink: 0; width: 180px;
   display: flex; align-items: center;
-  margin-left: -120px;
-  align-self: center;
-  padding-top: 48px;
 }
 
 .section-label {
@@ -402,13 +403,13 @@ h1.hero-title {
 .checklist-title {
   font-family: var(--font-display); font-weight: 700;
   font-size: clamp(28px, 3.2vw, 44px); color: var(--chalk);
-  margin-bottom: 18px; margin-top: 18px;
+  margin-bottom: 10px; margin-top: 10px;
   text-align: left;
 }
 .checklist { list-style: none; margin-bottom: 24px; width: fit-content; }
 .checklist-item {
   display: flex; align-items: center; gap: 14px;
-  padding: 11px 0;
+  padding: 7px 0;
   position: relative;
   cursor: none;
   border-bottom: 1px solid rgba(240,234,224,0.07);
@@ -435,7 +436,7 @@ h1.hero-title {
 .checklist-item.checked .strike-line { width: 100%; }
 .checklist-item.checked .checklist-text { color: var(--chalk-muted); }
 .illus-frame {
-  width: 100%; max-width: 260px;
+  width: 100%; max-width: 180px;
   aspect-ratio: 1/1;
   border-radius: 8px; margin-bottom: 18px;
   position: relative; overflow: hidden;
@@ -1133,24 +1134,27 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
 
 
 <div class="panel" id="panel-about">
+    <!-- LEFT: About title + bio -->
     <div class="about-left">
       <div class="section-label panel-reveal">About</div>
       <p class="about-bio panel-reveal" style="transition-delay:.1s">
         Through marketing and communication, I built a sensitivity to design and user journeys. I am now dedicated to bringing ideas to life, whether I am crafting high-fidelity prototypes in Figma or experimenting with vibe coding. I am eager to join a team where I can apply this hands-on energy to real-world product challenges.
       </p>
-      <div style="display:inline-flex;flex-direction:column;align-items:stretch;max-width:300px;">
-        <div class="about-photo panel-reveal" style="transition-delay:.2s;width:100%;">
-          <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/portrait-craie.png"
-               alt="Camille Cong-Perret"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-          <div class="about-photo-ph" style="display:none;">[ portrait craie.png ]</div>
-        </div>
-        <div class="lang-tags panel-reveal" style="transition-delay:.3s;margin-top:14px;flex-wrap:nowrap;">
-          <span class="lang-tag">French - native</span>
-          <span class="lang-tag">English - C1 (TOEIC 980)</span>
-        </div>
+      <div class="lang-tags panel-reveal" style="transition-delay:.2s;margin-top:14px;flex-wrap:nowrap;">
+        <span class="lang-tag">French - native</span>
+        <span class="lang-tag">English - C1 (TOEIC 980)</span>
       </div>
     </div>
+    <!-- MIDDLE: Portrait -->
+    <div class="about-portrait-col panel-reveal" style="transition-delay:.15s;">
+      <div class="about-photo" style="width:auto;height:100%;max-height:320px;aspect-ratio:1/1;">
+        <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/portrait-craie.png"
+             alt="Camille Cong-Perret"
+             onerror="this.style.display='none';"
+             style="width:100%;height:100%;object-fit:cover;">
+      </div>
+    </div>
+    <!-- RIGHT: What I bring -->
     <div class="about-right">
       <div class="about-checklist-col">
       <h3 class="checklist-title">What I bring</h3>
