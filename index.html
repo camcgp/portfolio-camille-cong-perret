@@ -330,7 +330,7 @@ h1.hero-title {
   width: 100vw;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
+  align-items: start;
   padding: 0;
 }
 .about-left {
@@ -347,12 +347,11 @@ h1.hero-title {
 }
 .about-right::-webkit-scrollbar { display: none; }
 .about-checklist-col {
-  display: flex; flex-direction: column; justify-content: center; flex: 1;
+  display: flex; flex-direction: column; width: fit-content;
 }
 .about-illus-col {
   flex-shrink: 0; width: 200px;
-  display: flex; align-items: flex-start;
-  margin-top: 52px;
+  display: flex; align-items: center;
 }
 
 .section-label {
