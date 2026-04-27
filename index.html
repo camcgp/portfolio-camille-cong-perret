@@ -1909,10 +1909,19 @@ function openProject(idx) {
         <button class="detail-nav-btn" onclick="openProject((${idx}+1)%4); projectDetail.scrollTop=0;">Next project →</button>
       </div>`;
 
-  // Set initial volume for Alinea
+  // Set initial volume for Alinea and keep custom slider in sync
   if(isAlinea) {
     const vid = document.getElementById('alinea-cover');
-    if(vid) { vid.volume = 0.6; vid.muted = false; }
+    if(vid) {
+      vid.volume = 0.6;
+      vid.muted = false;
+      // Whenever volume changes (including via native fullscreen controls), sync the custom slider + icon
+      vid.addEventListener('volumechange', function() {
+        const slider = document.getElementById('alinea-vol');
+        if(slider) slider.value = vid.muted ? 0 : vid.volume;
+        updateAlineaSoundIcon(vid.muted || vid.volume === 0);
+      });
+    }
   }
 
   projectDetail.scrollTop = 0;
