@@ -2017,7 +2017,10 @@ document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeF
 var detailEl = document.getElementById('detail-content');
 detailEl.addEventListener('mouseover', function(e){
   if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') {
-    document.body.classList.add('cursor-fullscreen'); dot.textContent = 'full screen';
+    // Only show "full screen" cursor when fullscreen is NOT already open
+    if (!fsOverlay.classList.contains('show')) {
+      document.body.classList.add('cursor-fullscreen'); dot.textContent = 'full screen';
+    }
   }
 });
 detailEl.addEventListener('mouseout', function(e){
@@ -2026,8 +2029,24 @@ detailEl.addEventListener('mouseout', function(e){
   }
 });
 detailEl.addEventListener('click', function(e){
-  if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') openFullscreen(e.target);
+  // Only open fullscreen when clicking a media element AND fullscreen isn't already open
+  if ((e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') && !fsOverlay.classList.contains('show')) {
+    openFullscreen(e.target);
+  }
 });
+// When fullscreen opens: reset cursor to normal
+fsOverlay.addEventListener('transitionend', function(){});
+// Watch for fullscreen state changes to keep cursor correct
+function onFsOpen() {
+  document.body.classList.remove('cursor-fullscreen');
+  dot.textContent = '';
+}
+// Patch openFullscreen to reset cursor on open
+var _origOpenFs = openFullscreen;
+openFullscreen = function(el) {
+  _origOpenFs(el);
+  onFsOpen();
+};
 fsCloseBtn.addEventListener('mouseenter', function(){ document.body.classList.add('cursor-open'); });
 fsCloseBtn.addEventListener('mouseleave', function(){ document.body.classList.remove('cursor-open'); });
 
