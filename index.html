@@ -1938,7 +1938,15 @@ function toggleAlineaMute() {
   updateAlineaSoundIcon(vid.muted);
 }
 
+function stopDetailVideos() {
+  // Close fullscreen first if open, to restore the video to the DOM
+  if (fsOverlay.classList.contains('show')) closeFullscreen();
+  // Stop all videos currently rendered inside the detail panel
+  document.querySelectorAll('#detail-content video').forEach(v => { v.pause(); v.src = ''; });
+}
+
 function closeProject() {
+  stopDetailVideos();
   projectDetail.classList.remove('visible');
   setTimeout(() => projectDetail.classList.remove('show'), 350);
   document.body.style.overflow = '';
@@ -1952,26 +1960,56 @@ document.getElementById('detail-back').addEventListener('click', closeProject);
 var fsOverlay = document.getElementById('fs-overlay');
 var fsContent = document.getElementById('fs-content');
 var fsCloseBtn = document.getElementById('fs-close');
+// Keep track of original parent/placeholder so we can restore the element on close
+var fsOriginalParent = null;
+var fsOriginalPlaceholder = null;
+
 function openFullscreen(el) {
-  fsContent.innerHTML = '';
-  var node;
   if (el.tagName === 'VIDEO') {
-    node = document.createElement('video');
-    node.src = el.currentSrc || el.src;
-    node.controls = true; node.autoplay = true; node.loop = true; node.playsInline = true;
+    // Remember where it came from
+    fsOriginalParent = el.parentNode;
+    // Insert a placeholder so the layout doesn't collapse
+    fsOriginalPlaceholder = document.createElement('div');
+    fsOriginalPlaceholder.style.cssText = 'display:none;';
+    fsOriginalParent.insertBefore(fsOriginalPlaceholder, el);
+    // Move the real element into the overlay — playback continues uninterrupted
+    el.style.maxWidth = '88vw';
+    el.style.maxHeight = '88vh';
+    el.style.width = 'auto';
+    el.style.height = 'auto';
+    el.controls = true;
+    fsContent.appendChild(el);
   } else {
-    node = document.createElement('img');
-    node.src = el.src; node.alt = el.alt || '';
+    // Images: just clone as before
+    fsOriginalParent = null;
+    var img = document.createElement('img');
+    img.src = el.src; img.alt = el.alt || '';
+    fsContent.appendChild(img);
   }
-  fsContent.appendChild(node);
   fsOverlay.classList.add('show');
-  if (node.tagName === 'VIDEO') node.play().catch(function(){});
 }
+
 function closeFullscreen() {
   fsOverlay.classList.remove('show');
   var v = fsContent.querySelector('video');
-  if (v) v.pause();
-  fsContent.innerHTML = '';
+  if (v) {
+    v.controls = false;
+    v.style.maxWidth = '';
+    v.style.maxHeight = '';
+    v.style.width = '';
+    v.style.height = '';
+    if (fsOriginalParent && fsOriginalPlaceholder) {
+      // Put the video back where it was
+      fsOriginalParent.insertBefore(v, fsOriginalPlaceholder);
+      fsOriginalPlaceholder.remove();
+      fsOriginalPlaceholder = null;
+      fsOriginalParent = null;
+    } else {
+      v.pause();
+    }
+  } else {
+    fsContent.innerHTML = '';
+  }
 }
 fsCloseBtn.addEventListener('click', closeFullscreen);
 fsOverlay.addEventListener('click', function(e){ if (e.target === fsOverlay) closeFullscreen(); });
